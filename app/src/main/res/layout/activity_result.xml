@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_light">
@@ -11,231 +10,167 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_foreground"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BuyMyPhone Result"
             android:textColor="@color/text_white"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
 
-        <com.google.android.material.card.MaterialCardView
+        <!-- Overall Card -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/card_dark_green"
+            android:padding="18dp"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/card_white"
-            app:cardCornerRadius="22dp"
-            app:cardElevation="6dp"
-            app:strokeColor="@color/stroke_soft"
-            app:strokeWidth="1dp">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:text="Overall Score"
+                android:textColor="@color/text_gray"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/txtOverallScore"
+                android:text="85/100"
+                android:textColor="@color/text_white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginTop="6dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressOverall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:progressDrawable="@drawable/progress_custom"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Overall Score"
-                    android:textColor="@color/text_gray"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/txtVerdict"
+                android:text="Very Good phone"
+                android:textColor="@color/text_white"
+                android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:id="@+id/txtOverallScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="85/100"
-                    android:textColor="@color/text_white"
-                    android:textSize="32sp"
-                    android:textStyle="bold" />
+        </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/progressOverall"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginTop="12dp"
-                    android:max="100"
-                    android:progress="85"
-                    android:progressTint="@color/green_soft"
-                    android:progressBackgroundTint="#26303D" />
-
-                <TextView
-                    android:id="@+id/txtVerdict"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Very Good phone"
-                    android:textColor="@color/text_white"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
+        <!-- Item Scores -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/card_dark_green"
+            android:padding="18dp"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/card_white"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="4dp"
-            app:strokeColor="@color/stroke_soft"
-            app:strokeWidth="1dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="18dp">
+            <TextView
+                android:text="Item Scores"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Item Scores"
-                    android:textColor="@color/text_white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txtItemScores"
+                android:textColor="@color/text_white"
+                android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:id="@+id/txtItemScores"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingExtra="6dp"
-                    android:textColor="@color/text_white"
-                    android:textSize="14sp" />
+        </LinearLayout>
 
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
+        <!-- Best For -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/card_dark_green"
+            android:padding="18dp"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/card_white"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="4dp"
-            app:strokeColor="@color/stroke_soft"
-            app:strokeWidth="1dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="18dp">
+            <TextView
+                android:text="Best For"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Best For"
-                    android:textColor="@color/text_white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txtBestFor"
+                android:textColor="@color/text_white"
+                android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:id="@+id/txtBestFor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingExtra="6dp"
-                    android:textColor="@color/text_white"
-                    android:textSize="14sp" />
+        </LinearLayout>
 
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
+        <!-- Raw Info -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/card_dark_green"
+            android:padding="18dp"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="@color/card_white"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="4dp"
-            app:strokeColor="@color/stroke_soft"
-            app:strokeWidth="1dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="18dp">
+            <TextView
+                android:text="Raw Device Info"
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Raw Device Info"
-                    android:textColor="@color/text_white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txtRawInfo"
+                android:textColor="@color/text_white"
+                android:layout_marginTop="10dp"/>
 
-                <TextView
-                    android:id="@+id/txtRawInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingExtra="5dp"
-                    android:textColor="@color/text_white"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/adContainerResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="18dp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"/>
 
-        <LinearLayout
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/btnPreviewReport"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="20dp"
-            android:orientation="vertical">
+            android:background="@drawable/button_neon"
+            android:text="Preview Report"
+            android:textColor="@color/text_white"/>
 
-            <Button
-                android:id="@+id/btnPreviewReport"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_neon"
-                android:text="Preview Report"
-                android:textAllCaps="false"
-                android:textColor="@color/text_white" />
+        <Button
+            android:id="@+id/btnDownloadTxt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1E2630"
+            android:text="Download TXT"
+            android:textColor="@color/text_white"/>
 
-            <Button
-                android:id="@+id/btnDownloadTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#1E2630"
-                android:text="Download TXT Report"
-                android:textAllCaps="false"
-                android:textColor="@color/text_white" />
+        <Button
+            android:id="@+id/btnDownloadPdf"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1E2630"
+            android:text="Download PDF"
+            android:textColor="@color/text_white"/>
 
-            <Button
-                android:id="@+id/btnDownloadPdf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#1E2630"
-                android:text="Download PDF Report"
-                android:textAllCaps="false"
-                android:textColor="@color/text_white" />
-
-            <Button
-                android:id="@+id/btnBackHomeFromResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#1E2630"
-                android:text="Back to Home"
-                android:textAllCaps="false"
-                android:textColor="@color/text_white" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnBackHomeFromResult"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1E2630"
+            android:text="Back"
+            android:textColor="@color/text_white"/>
 
     </LinearLayout>
 </ScrollView>
