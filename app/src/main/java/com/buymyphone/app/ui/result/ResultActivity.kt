@@ -3,14 +3,16 @@ package com.buymyphone.app.ui.result
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.DocumentsContract
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.buymyphone.app.databinding.ActivityResultBinding
+import com.buymyphone.app.detector.DeviceInfoDetector
 import com.buymyphone.app.export.TxtReportExporter
 import com.buymyphone.app.ui.home.HomeActivity
 import com.buymyphone.app.ui.report.ReportPreviewActivity
+import com.buymyphone.app.utils.DeviceFormatUtils
 
 class ResultActivity : AppCompatActivity() {
 
@@ -37,10 +39,12 @@ class ResultActivity : AppCompatActivity() {
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val basicInfo = DeviceInfoDetector.getBasicDeviceInfo(this)
+
         val cpuScore = 60
         val gpuScore = 58
-        val ramScore = 72
-        val storageScore = 65
+        val ramScore = getRamScore(basicInfo.totalRamGb)
+        val storageScore = getStorageScore(basicInfo.totalStorageGb)
         val displayScore = 80
         val batteryScore = 70
         val cameraScore = 62
@@ -56,6 +60,8 @@ class ResultActivity : AppCompatActivity() {
             cameraScore +
             sensorScore
         ) / 8
+
+        val modelName = "${Build.BRAND} ${Build.MODEL}"
 
         binding.txtOverallScore.text = "$overallScore/100"
         binding.progressOverall.progress = overallScore
@@ -73,16 +79,20 @@ class ResultActivity : AppCompatActivity() {
         }
 
         binding.txtRawInfo.text = buildString {
-            appendLine("Model: Example Device")
-            appendLine("Android Version: 13")
-            appendLine("RAM: 8 GB")
-            appendLine("Storage: 128 GB")
-            appendLine("Display: 1080 x 2400, 120Hz")
-            appendLine("Processor: Snapdragon 778G")
-            appendLine("GPU: Adreno 642L")
-            appendLine("Battery: 4300 mAh")
-            appendLine("Camera: 64 MP main")
-            appendLine("Sensors Status: Most major sensors available")
+            appendLine("Model: $modelName")
+            appendLine("Android Version: ${basicInfo.androidVersion}")
+            appendLine("SDK: ${basicInfo.sdkInt}")
+            appendLine("Security Patch: ${basicInfo.securityPatch}")
+            appendLine("RAM: ${DeviceFormatUtils.formatDouble(basicInfo.totalRamGb)} GB")
+            appendLine("Available RAM: ${DeviceFormatUtils.formatDouble(basicInfo.availableRamGb)} GB")
+            appendLine("Storage: ${DeviceFormatUtils.formatDouble(basicInfo.totalStorageGb)} GB")
+            appendLine("Available Storage: ${DeviceFormatUtils.formatDouble(basicInfo.availableStorageGb)} GB")
+            appendLine("Display: Not added yet")
+            appendLine("Processor: Not added yet")
+            appendLine("GPU: Not added yet")
+            appendLine("Battery: Not added yet")
+            appendLine("Camera: Not added yet")
+            appendLine("Sensors Status: Not added yet")
         }
 
         reportText = buildString {
@@ -101,16 +111,20 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Sensors: $sensorScore/100")
             appendLine()
             appendLine("Raw Info:")
-            appendLine("Model: Example Device")
-            appendLine("Android Version: 13")
-            appendLine("RAM: 8 GB")
-            appendLine("Storage: 128 GB")
-            appendLine("Display: 1080 x 2400, 120Hz")
-            appendLine("Processor: Snapdragon 778G")
-            appendLine("GPU: Adreno 642L")
-            appendLine("Battery: 4300 mAh")
-            appendLine("Camera: 64 MP main")
-            appendLine("Sensors Status: Most major sensors available")
+            appendLine("Model: $modelName")
+            appendLine("Android Version: ${basicInfo.androidVersion}")
+            appendLine("SDK: ${basicInfo.sdkInt}")
+            appendLine("Security Patch: ${basicInfo.securityPatch}")
+            appendLine("RAM: ${DeviceFormatUtils.formatDouble(basicInfo.totalRamGb)} GB")
+            appendLine("Available RAM: ${DeviceFormatUtils.formatDouble(basicInfo.availableRamGb)} GB")
+            appendLine("Storage: ${DeviceFormatUtils.formatDouble(basicInfo.totalStorageGb)} GB")
+            appendLine("Available Storage: ${DeviceFormatUtils.formatDouble(basicInfo.availableStorageGb)} GB")
+            appendLine("Display: Not added yet")
+            appendLine("Processor: Not added yet")
+            appendLine("GPU: Not added yet")
+            appendLine("Battery: Not added yet")
+            appendLine("Camera: Not added yet")
+            appendLine("Sensors Status: Not added yet")
             appendLine()
             appendLine("Verdict:")
             appendLine(getVerdict(overallScore))
@@ -135,6 +149,27 @@ class ResultActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
+        }
+    }
+
+    private fun getRamScore(totalRamGb: Double): Int {
+        return when {
+            totalRamGb >= 16 -> 95
+            totalRamGb >= 12 -> 88
+            totalRamGb >= 8 -> 78
+            totalRamGb >= 6 -> 68
+            totalRamGb >= 4 -> 55
+            else -> 35
+        }
+    }
+
+    private fun getStorageScore(totalStorageGb: Double): Int {
+        return when {
+            totalStorageGb >= 512 -> 95
+            totalStorageGb >= 256 -> 85
+            totalStorageGb >= 128 -> 75
+            totalStorageGb >= 64 -> 60
+            else -> 40
         }
     }
 
