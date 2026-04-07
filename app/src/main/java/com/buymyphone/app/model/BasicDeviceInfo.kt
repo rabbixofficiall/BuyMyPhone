@@ -15,5 +15,15 @@ data class BasicDeviceInfo(
     val batteryLevelPercent: Int,
     val batteryTemperatureCelsius: Float,
     val isCharging: Boolean,
-    val batteryHealthText: String
+    val batteryHealthText: String,
+    val socModel: String,
+    val socManufacturer: String,
+    val hardware: String,
+    val board: String,
+    val supportedAbis: String,
+    val coreCount: Int,
+    val maxCpuFreqMHz: Int,
+    val gpuRenderer: String,
+    val gpuVendor: String,
+    val gpuVersion: String
 )
