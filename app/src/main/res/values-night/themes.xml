@@ -1,0 +1,13 @@
+<resources>
+
+    <style name="Theme.BuyMyPhone" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">#00E676</item>
+        <item name="colorOnPrimary">#000000</item>
+
+        <item name="android:colorBackground">#121212</item>
+        <item name="android:statusBarColor">#000000</item>
+
+    </style>
+
+</resources>
