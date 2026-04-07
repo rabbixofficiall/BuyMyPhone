@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_analysis_terminal">
+    android:background="@drawable/hacker_texture">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,95 +10,45 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <ImageView
+            android:id="@+id/imgLogoTop"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher_foreground"/>
+
         <TextView
             android:id="@+id/txtAnalysisTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LIVE ANALYSIS"
             android:textColor="@color/green_terminal"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txtCurrentStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Initializing terminal..."
-            android:textColor="@color/green_soft"
-            android:textSize="15sp" />
+            android:textSize="24sp"
+            android:layout_marginTop="16dp"/>
 
         <ProgressBar
             android:id="@+id/progressAnalysis"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="12dp"
-            android:layout_marginTop="18dp"
-            android:max="100"
-            android:progress="0"
-            android:progressTint="@color/green_terminal"
-            android:progressBackgroundTint="#14331F" />
+            android:layout_marginTop="20dp"
+            android:progressDrawable="@drawable/progress_custom"/>
 
         <TextView
             android:id="@+id/txtProgressPercent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="0%"
             android:textColor="@color/green_terminal"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="8dp"/>
 
-        <com.google.android.material.card.MaterialCardView
+        <TextView
+            android:id="@+id/txtLiveLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/green_dark"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/card_dark_green"
-                android:orientation="vertical"
-                android:padding="18dp">
-
-                <TextView
-                    android:id="@+id/txtLogTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TERMINAL LOG"
-                    android:textColor="@color/green_terminal"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtLiveLog"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:fontFamily="monospace"
-                    android:lineSpacingExtra="6dp"
-                    android:text="Waiting to start..."
-                    android:textColor="@color/green_soft"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <Button
-            android:id="@+id/btnCancelAnalysis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:backgroundTint="#182018"
-            android:text="Abort"
-            android:textAllCaps="false"
-            android:textColor="@color/green_terminal" />
+            android:textColor="@color/green_soft"
+            android:fontFamily="monospace"
+            android:textSize="13sp"
+            android:layout_marginTop="20dp"/>
 
     </LinearLayout>
 
