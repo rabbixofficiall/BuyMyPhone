@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/bg_light">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="About This App"
-            android:textColor="#111111"
+            android:textColor="@color/text_white"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -23,9 +23,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardBackgroundColor="@color/card_white"
             app:cardCornerRadius="18dp"
             app:cardElevation="4dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            app:strokeColor="@color/stroke_soft"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="BuyMyPhone"
-                    android:textColor="#111111"
+                    android:textColor="@color/text_white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -48,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Version 1.0"
-                    android:textColor="#666666"
+                    android:textColor="@color/text_gray"
                     android:textSize="14sp" />
 
                 <TextView
@@ -57,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="BuyMyPhone is a smart Android device analyzer app that checks phone hardware, sensors, software, and supported features. It gives item-wise scores, overall rating, and downloadable reports."
-                    android:textColor="#333333"
+                    android:textColor="@color/text_white"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -68,9 +71,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardBackgroundColor="@color/card_white"
             app:cardCornerRadius="18dp"
             app:cardElevation="4dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            app:strokeColor="@color/stroke_soft"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Developer Information"
-                    android:textColor="#111111"
+                    android:textColor="@color/text_white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -93,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:text="Name: MD Rabbi Hossain"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_white"
                     android:textSize="15sp" />
 
                 <TextView
@@ -102,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Role: Developer"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_white"
                     android:textSize="15sp" />
 
                 <TextView
@@ -111,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Email: rabbihossainltd@gmail.com"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_white"
                     android:textSize="15sp" />
 
                 <TextView
@@ -120,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Phone: +8801731410341"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_white"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -132,7 +138,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Back" />
+            android:backgroundTint="#1E2630"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textColor="@color/text_white" />
 
     </LinearLayout>
 
