@@ -15,6 +15,8 @@ object DeviceInfoDetector {
         val batteryInfo = BatteryDetector.getBatteryInfo(context)
         val cpuInfo = CpuDetector.getCpuInfo()
         val gpuInfo = GpuDetector.getGpuInfo()
+        val sensorInfo = SensorDetector.getSensorInfo(context)
+        val cameraInfo = CameraDetector.getCameraInfo(context)
 
         return BasicDeviceInfo(
             androidVersion = androidVersion,
@@ -41,7 +43,30 @@ object DeviceInfoDetector {
             maxCpuFreqMHz = cpuInfo.maxCpuFreqMHz,
             gpuRenderer = gpuInfo.renderer,
             gpuVendor = gpuInfo.vendor,
-            gpuVersion = gpuInfo.version
+            gpuVersion = gpuInfo.version,
+            totalSensors = sensorInfo.totalSensors,
+            hasAccelerometer = sensorInfo.accelerometer,
+            hasGyroscope = sensorInfo.gyroscope,
+            hasProximity = sensorInfo.proximity,
+            hasLightSensor = sensorInfo.light,
+            hasMagneticField = sensorInfo.magneticField,
+            hasBarometer = sensorInfo.barometer,
+            hasStepCounter = sensorInfo.stepCounter,
+            hasRotationVector = sensorInfo.rotationVector,
+            hasHeartRate = sensorInfo.heartRate,
+            sensorNames = sensorInfo.sensorNames,
+            totalCameras = cameraInfo.totalCameras,
+            rearCameraCount = cameraInfo.rearCameraCount,
+            frontCameraCount = cameraInfo.frontCameraCount,
+            bestRearCameraMp = cameraInfo.bestRearCameraMp,
+            bestFrontCameraMp = cameraInfo.bestFrontCameraMp,
+            hasFlash = cameraInfo.hasFlash,
+            hasOis = cameraInfo.hasOis,
+            hasAutoFocus = cameraInfo.hasAutoFocus,
+            hasVideoStabilization = cameraInfo.hasVideoStabilization,
+            supportsRaw = cameraInfo.supportsRaw,
+            supports4k = cameraInfo.supports4k,
+            cameraSummaryLines = cameraInfo.cameraSummaryLines
         )
     }
 }
