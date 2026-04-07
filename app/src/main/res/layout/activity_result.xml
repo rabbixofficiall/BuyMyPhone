@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BuyMyPhone Result"
-            android:textColor="@color/text_dark"
+            android:textColor="@color/text_white"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -23,8 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/card_white"
             app:cardCornerRadius="22dp"
-            app:cardElevation="6dp">
+            app:cardElevation="6dp"
+            app:strokeColor="@color/stroke_soft"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="85/100"
-                    android:textColor="@color/text_dark"
+                    android:textColor="@color/text_white"
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
@@ -57,7 +60,8 @@
                     android:layout_marginTop="12dp"
                     android:max="100"
                     android:progress="85"
-                    android:progressTint="@color/green_soft" />
+                    android:progressTint="@color/green_soft"
+                    android:progressBackgroundTint="#26303D" />
 
                 <TextView
                     android:id="@+id/txtVerdict"
@@ -65,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Very Good phone"
-                    android:textColor="@color/text_dark"
+                    android:textColor="@color/text_white"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -75,8 +79,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/card_white"
             app:cardCornerRadius="18dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:strokeColor="@color/stroke_soft"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Item Scores"
-                    android:textColor="@color/text_dark"
+                    android:textColor="@color/text_white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -98,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:lineSpacingExtra="6dp"
-                    android:textColor="@color/text_dark"
+                    android:textColor="@color/text_white"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -108,8 +115,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/card_white"
             app:cardCornerRadius="18dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:strokeColor="@color/stroke_soft"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Best For"
-                    android:textColor="@color/text_dark"
+                    android:textColor="@color/text_white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -131,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:lineSpacingExtra="6dp"
-                    android:textColor="@color/text_dark"
+                    android:textColor="@color/text_white"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -141,8 +151,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/card_white"
             app:cardCornerRadius="18dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            app:strokeColor="@color/stroke_soft"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -154,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Raw Device Info"
-                    android:textColor="@color/text_dark"
+                    android:textColor="@color/text_white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -164,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:lineSpacingExtra="5dp"
-                    android:textColor="@color/text_dark"
+                    android:textColor="@color/text_white"
                     android:textSize="13sp" />
 
             </LinearLayout>
@@ -197,30 +210,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/card_white"
+                android:backgroundTint="#1E2630"
                 android:text="Download TXT Report"
                 android:textAllCaps="false"
-                android:textColor="@color/text_dark" />
+                android:textColor="@color/text_white" />
 
             <Button
                 android:id="@+id/btnDownloadPdf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/card_white"
+                android:backgroundTint="#1E2630"
                 android:text="Download PDF Report"
                 android:textAllCaps="false"
-                android:textColor="@color/text_dark" />
+                android:textColor="@color/text_white" />
 
             <Button
                 android:id="@+id/btnBackHomeFromResult"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/card_white"
+                android:backgroundTint="#1E2630"
                 android:text="Back to Home"
                 android:textAllCaps="false"
-                android:textColor="@color/text_dark" />
+                android:textColor="@color/text_white" />
 
         </LinearLayout>
 
