@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@drawable/bg_analysis_terminal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,8 +15,8 @@
             android:id="@+id/txtAnalysisTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Live Analysis"
-            android:textColor="#111111"
+            android:text="LIVE ANALYSIS"
+            android:textColor="@color/green_terminal"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -25,19 +25,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Preparing analysis..."
-            android:textColor="#666666"
+            android:text="Initializing terminal..."
+            android:textColor="@color/green_soft"
             android:textSize="15sp" />
 
         <ProgressBar
             android:id="@+id/progressAnalysis"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="14dp"
+            android:layout_height="12dp"
             android:layout_marginTop="18dp"
             android:max="100"
             android:progress="0"
-            android:progressTint="#4CAF50" />
+            android:progressTint="@color/green_terminal"
+            android:progressBackgroundTint="#14331F" />
 
         <TextView
             android:id="@+id/txtProgressPercent"
@@ -45,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="0%"
-            android:textColor="#111111"
+            android:textColor="@color/green_terminal"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -53,12 +54,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@android:color/transparent"
             app:cardCornerRadius="18dp"
-            app:cardElevation="4dp">
+            app:cardElevation="0dp"
+            app:strokeColor="@color/green_dark"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/card_dark_green"
                 android:orientation="vertical"
                 android:padding="18dp">
 
@@ -66,8 +71,8 @@
                     android:id="@+id/txtLogTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Analysis Log"
-                    android:textColor="#111111"
+                    android:text="TERMINAL LOG"
+                    android:textColor="@color/green_terminal"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -76,10 +81,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="6dp"
                     android:text="Waiting to start..."
-                    android:textColor="#333333"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="6dp" />
+                    android:textColor="@color/green_soft"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -90,7 +96,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:text="Cancel" />
+            android:backgroundTint="#182018"
+            android:text="Abort"
+            android:textAllCaps="false"
+            android:textColor="@color/green_terminal" />
 
     </LinearLayout>
 
