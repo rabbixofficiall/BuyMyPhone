@@ -1,16 +1,36 @@
 package com.buymyphone.app.ui.result
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.buymyphone.app.databinding.ActivityResultBinding
+import com.buymyphone.app.export.TxtReportExporter
 import com.buymyphone.app.ui.home.HomeActivity
 import com.buymyphone.app.ui.report.ReportPreviewActivity
 
 class ResultActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityResultBinding
+    private lateinit var reportText: String
+
+    private val createTxtDocumentLauncher =
+        registerForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) { uri: Uri? ->
+            if (uri == null) {
+                Toast.makeText(this, "TXT save cancelled", Toast.LENGTH_SHORT).show()
+                return@registerForActivityResult
+            }
+
+            val success = TxtReportExporter.export(this, uri, reportText)
+            if (success) {
+                Toast.makeText(this, "TXT report saved successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Failed to save TXT report", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,45 +85,45 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Sensors Status: Most major sensors available")
         }
 
-        binding.btnPreviewReport.setOnClickListener {
-            val reportText = buildString {
-                appendLine("BUYMYPHONE REPORT")
-                appendLine("----------------------------")
-                appendLine("Overall Score: $overallScore/100")
-                appendLine()
-                appendLine("Item Scores:")
-                appendLine("CPU: $cpuScore/100")
-                appendLine("GPU: $gpuScore/100")
-                appendLine("RAM: $ramScore/100")
-                appendLine("Storage: $storageScore/100")
-                appendLine("Display: $displayScore/100")
-                appendLine("Battery: $batteryScore/100")
-                appendLine("Camera: $cameraScore/100")
-                appendLine("Sensors: $sensorScore/100")
-                appendLine()
-                appendLine("Raw Info:")
-                appendLine("Model: Example Device")
-                appendLine("Android Version: 13")
-                appendLine("RAM: 8 GB")
-                appendLine("Storage: 128 GB")
-                appendLine("Display: 1080 x 2400, 120Hz")
-                appendLine("Processor: Snapdragon 778G")
-                appendLine("GPU: Adreno 642L")
-                appendLine("Battery: 4300 mAh")
-                appendLine("Camera: 64 MP main")
-                appendLine("Sensors Status: Most major sensors available")
-                appendLine()
-                appendLine("Verdict:")
-                appendLine(getVerdict(overallScore))
-            }
+        reportText = buildString {
+            appendLine("BUYMYPHONE REPORT")
+            appendLine("----------------------------")
+            appendLine("Overall Score: $overallScore/100")
+            appendLine()
+            appendLine("Item Scores:")
+            appendLine("CPU: $cpuScore/100")
+            appendLine("GPU: $gpuScore/100")
+            appendLine("RAM: $ramScore/100")
+            appendLine("Storage: $storageScore/100")
+            appendLine("Display: $displayScore/100")
+            appendLine("Battery: $batteryScore/100")
+            appendLine("Camera: $cameraScore/100")
+            appendLine("Sensors: $sensorScore/100")
+            appendLine()
+            appendLine("Raw Info:")
+            appendLine("Model: Example Device")
+            appendLine("Android Version: 13")
+            appendLine("RAM: 8 GB")
+            appendLine("Storage: 128 GB")
+            appendLine("Display: 1080 x 2400, 120Hz")
+            appendLine("Processor: Snapdragon 778G")
+            appendLine("GPU: Adreno 642L")
+            appendLine("Battery: 4300 mAh")
+            appendLine("Camera: 64 MP main")
+            appendLine("Sensors Status: Most major sensors available")
+            appendLine()
+            appendLine("Verdict:")
+            appendLine(getVerdict(overallScore))
+        }
 
+        binding.btnPreviewReport.setOnClickListener {
             val intent = Intent(this, ReportPreviewActivity::class.java)
             intent.putExtra("report_text", reportText)
             startActivity(intent)
         }
 
         binding.btnDownloadTxt.setOnClickListener {
-            Toast.makeText(this, "TXT download will be added in next step", Toast.LENGTH_SHORT).show()
+            createTxtDocumentLauncher.launch("buymyphone_report.txt")
         }
 
         binding.btnDownloadPdf.setOnClickListener {
