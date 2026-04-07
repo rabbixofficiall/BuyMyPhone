@@ -13,6 +13,8 @@ object DeviceInfoDetector {
         val storageInfo = StorageDetector.getStorageInfo()
         val displayInfo = DisplayDetector.getDisplayInfo(context)
         val batteryInfo = BatteryDetector.getBatteryInfo(context)
+        val cpuInfo = CpuDetector.getCpuInfo()
+        val gpuInfo = GpuDetector.getGpuInfo()
 
         return BasicDeviceInfo(
             androidVersion = androidVersion,
@@ -29,7 +31,17 @@ object DeviceInfoDetector {
             batteryLevelPercent = batteryInfo.batteryLevelPercent,
             batteryTemperatureCelsius = batteryInfo.batteryTemperatureCelsius,
             isCharging = batteryInfo.isCharging,
-            batteryHealthText = batteryInfo.healthText
+            batteryHealthText = batteryInfo.healthText,
+            socModel = cpuInfo.socModel,
+            socManufacturer = cpuInfo.socManufacturer,
+            hardware = cpuInfo.hardware,
+            board = cpuInfo.board,
+            supportedAbis = cpuInfo.supportedAbis,
+            coreCount = cpuInfo.coreCount,
+            maxCpuFreqMHz = cpuInfo.maxCpuFreqMHz,
+            gpuRenderer = gpuInfo.renderer,
+            gpuVendor = gpuInfo.vendor,
+            gpuVersion = gpuInfo.version
         )
     }
 }
