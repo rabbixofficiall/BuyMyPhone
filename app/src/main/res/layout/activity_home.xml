@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="BuyMyPhone"
-        android:textColor="@color/text_dark"
+        android:textColor="@color/text_white"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,8 +35,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        app:cardCornerRadius="22dp"
-        app:cardElevation="6dp"
+        app:cardBackgroundColor="@color/card_white"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
         app:strokeColor="@color/stroke_soft"
         app:strokeWidth="1dp"
         app:layout_constraintTop_toBottomOf="@id/txtSubtitle"
@@ -53,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ready to scan"
-                android:textColor="@color/text_dark"
+                android:textColor="@color/text_white"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -80,20 +81,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="@color/card_white"
+                android:backgroundTint="#1E2630"
                 android:text="About This App"
                 android:textAllCaps="false"
-                android:textColor="@color/text_dark" />
+                android:textColor="@color/text_white" />
 
             <Button
                 android:id="@+id/btnGoPremium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="@color/card_white"
+                android:backgroundTint="#1E2630"
                 android:text="Go Premium"
                 android:textAllCaps="false"
-                android:textColor="@color/text_dark" />
+                android:textColor="@color/text_white" />
 
         </LinearLayout>
 
