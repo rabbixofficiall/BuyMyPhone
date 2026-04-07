@@ -26,7 +26,16 @@ class ResultActivity : AppCompatActivity() {
         val cameraScore = 62
         val sensorScore = 85
 
-        val overallScore = (cpuScore + gpuScore + ramScore + storageScore + displayScore + batteryScore + cameraScore + sensorScore) / 8
+        val overallScore = (
+            cpuScore +
+            gpuScore +
+            ramScore +
+            storageScore +
+            displayScore +
+            batteryScore +
+            cameraScore +
+            sensorScore
+        ) / 8
 
         binding.txtOverallScore.text = "$overallScore/100"
         binding.progressOverall.progress = overallScore
@@ -57,7 +66,40 @@ class ResultActivity : AppCompatActivity() {
         }
 
         binding.btnPreviewReport.setOnClickListener {
-            startActivity(Intent(this, ReportPreviewActivity::class.java))
+            val reportText = buildString {
+                appendLine("BUYMYPHONE REPORT")
+                appendLine("----------------------------")
+                appendLine("Overall Score: $overallScore/100")
+                appendLine()
+                appendLine("Item Scores:")
+                appendLine("CPU: $cpuScore/100")
+                appendLine("GPU: $gpuScore/100")
+                appendLine("RAM: $ramScore/100")
+                appendLine("Storage: $storageScore/100")
+                appendLine("Display: $displayScore/100")
+                appendLine("Battery: $batteryScore/100")
+                appendLine("Camera: $cameraScore/100")
+                appendLine("Sensors: $sensorScore/100")
+                appendLine()
+                appendLine("Raw Info:")
+                appendLine("Model: Example Device")
+                appendLine("Android Version: 13")
+                appendLine("RAM: 8 GB")
+                appendLine("Storage: 128 GB")
+                appendLine("Display: 1080 x 2400, 120Hz")
+                appendLine("Processor: Snapdragon 778G")
+                appendLine("GPU: Adreno 642L")
+                appendLine("Battery: 4300 mAh")
+                appendLine("Camera: 64 MP main")
+                appendLine("Sensors Status: Most major sensors available")
+                appendLine()
+                appendLine("Verdict:")
+                appendLine(getVerdict(overallScore))
+            }
+
+            val intent = Intent(this, ReportPreviewActivity::class.java)
+            intent.putExtra("report_text", reportText)
+            startActivity(intent)
         }
 
         binding.btnDownloadTxt.setOnClickListener {
