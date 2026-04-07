@@ -2,8 +2,8 @@ package com.buymyphone.app.ui.result
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.os.Build
+import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -45,8 +45,16 @@ class ResultActivity : AppCompatActivity() {
         val gpuScore = 58
         val ramScore = getRamScore(basicInfo.totalRamGb)
         val storageScore = getStorageScore(basicInfo.totalStorageGb)
-        val displayScore = 80
-        val batteryScore = 70
+        val displayScore = getDisplayScore(
+            width = basicInfo.displayWidth,
+            height = basicInfo.displayHeight,
+            refreshRate = basicInfo.refreshRate
+        )
+        val batteryScore = getBatteryScore(
+            batteryLevelPercent = basicInfo.batteryLevelPercent,
+            batteryHealthText = basicInfo.batteryHealthText,
+            isCharging = basicInfo.isCharging
+        )
         val cameraScore = 62
         val sensorScore = 85
 
@@ -87,10 +95,15 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Available RAM: ${DeviceFormatUtils.formatDouble(basicInfo.availableRamGb)} GB")
             appendLine("Storage: ${DeviceFormatUtils.formatDouble(basicInfo.totalStorageGb)} GB")
             appendLine("Available Storage: ${DeviceFormatUtils.formatDouble(basicInfo.availableStorageGb)} GB")
-            appendLine("Display: Not added yet")
+            appendLine("Display: ${basicInfo.displayWidth} x ${basicInfo.displayHeight}")
+            appendLine("Refresh Rate: ${DeviceFormatUtils.formatDouble(basicInfo.refreshRate.toDouble())} Hz")
+            appendLine("Density: ${basicInfo.densityDpi} dpi")
+            appendLine("Battery Level: ${basicInfo.batteryLevelPercent}%")
+            appendLine("Battery Temp: ${DeviceFormatUtils.formatDouble(basicInfo.batteryTemperatureCelsius.toDouble())} °C")
+            appendLine("Charging: ${if (basicInfo.isCharging) "Yes" else "No"}")
+            appendLine("Battery Health: ${basicInfo.batteryHealthText}")
             appendLine("Processor: Not added yet")
             appendLine("GPU: Not added yet")
-            appendLine("Battery: Not added yet")
             appendLine("Camera: Not added yet")
             appendLine("Sensors Status: Not added yet")
         }
@@ -119,10 +132,15 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Available RAM: ${DeviceFormatUtils.formatDouble(basicInfo.availableRamGb)} GB")
             appendLine("Storage: ${DeviceFormatUtils.formatDouble(basicInfo.totalStorageGb)} GB")
             appendLine("Available Storage: ${DeviceFormatUtils.formatDouble(basicInfo.availableStorageGb)} GB")
-            appendLine("Display: Not added yet")
+            appendLine("Display: ${basicInfo.displayWidth} x ${basicInfo.displayHeight}")
+            appendLine("Refresh Rate: ${DeviceFormatUtils.formatDouble(basicInfo.refreshRate.toDouble())} Hz")
+            appendLine("Density: ${basicInfo.densityDpi} dpi")
+            appendLine("Battery Level: ${basicInfo.batteryLevelPercent}%")
+            appendLine("Battery Temp: ${DeviceFormatUtils.formatDouble(basicInfo.batteryTemperatureCelsius.toDouble())} °C")
+            appendLine("Charging: ${if (basicInfo.isCharging) "Yes" else "No"}")
+            appendLine("Battery Health: ${basicInfo.batteryHealthText}")
             appendLine("Processor: Not added yet")
             appendLine("GPU: Not added yet")
-            appendLine("Battery: Not added yet")
             appendLine("Camera: Not added yet")
             appendLine("Sensors Status: Not added yet")
             appendLine()
@@ -171,6 +189,49 @@ class ResultActivity : AppCompatActivity() {
             totalStorageGb >= 64 -> 60
             else -> 40
         }
+    }
+
+    private fun getDisplayScore(width: Int, height: Int, refreshRate: Float): Int {
+        val resolutionScore = when {
+            width >= 1440 || height >= 3200 -> 90
+            width >= 1080 || height >= 2400 -> 78
+            width >= 720 || height >= 1600 -> 62
+            else -> 45
+        }
+
+        val refreshScore = when {
+            refreshRate >= 144f -> 95
+            refreshRate >= 120f -> 88
+            refreshRate >= 90f -> 76
+            refreshRate >= 60f -> 60
+            else -> 40
+        }
+
+        return (resolutionScore + refreshScore) / 2
+    }
+
+    private fun getBatteryScore(
+        batteryLevelPercent: Int,
+        batteryHealthText: String,
+        isCharging: Boolean
+    ): Int {
+        var score = when {
+            batteryLevelPercent >= 90 -> 90
+            batteryLevelPercent >= 70 -> 80
+            batteryLevelPercent >= 50 -> 68
+            batteryLevelPercent >= 30 -> 55
+            else -> 40
+        }
+
+        if (batteryHealthText.equals("Good", ignoreCase = true)) {
+            score += 5
+        }
+
+        if (isCharging) {
+            score += 2
+        }
+
+        return score.coerceAtMost(100)
     }
 
     private fun getVerdict(score: Int): String {
