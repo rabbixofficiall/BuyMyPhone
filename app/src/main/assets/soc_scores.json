@@ -1,0 +1,162 @@
+[
+  {
+    "name": "Snapdragon 8 Gen 3",
+    "cpuScore": 98,
+    "gpuScore": 97,
+    "cameraScore": 92,
+    "batteryScore": 88,
+    "dailyScore": 95
+  },
+  {
+    "name": "Snapdragon 8 Gen 2",
+    "cpuScore": 95,
+    "gpuScore": 94,
+    "cameraScore": 90,
+    "batteryScore": 86,
+    "dailyScore": 93
+  },
+  {
+    "name": "Snapdragon 888",
+    "cpuScore": 88,
+    "gpuScore": 86,
+    "cameraScore": 84,
+    "batteryScore": 72,
+    "dailyScore": 85
+  },
+  {
+    "name": "Snapdragon 870",
+    "cpuScore": 84,
+    "gpuScore": 82,
+    "cameraScore": 80,
+    "batteryScore": 78,
+    "dailyScore": 86
+  },
+  {
+    "name": "Snapdragon 778G",
+    "cpuScore": 78,
+    "gpuScore": 74,
+    "cameraScore": 75,
+    "batteryScore": 76,
+    "dailyScore": 84
+  },
+  {
+    "name": "Snapdragon 695",
+    "cpuScore": 63,
+    "gpuScore": 56,
+    "cameraScore": 60,
+    "batteryScore": 80,
+    "dailyScore": 75
+  },
+  {
+    "name": "Snapdragon 680",
+    "cpuScore": 52,
+    "gpuScore": 42,
+    "cameraScore": 54,
+    "batteryScore": 82,
+    "dailyScore": 68
+  },
+  {
+    "name": "Snapdragon 662",
+    "cpuScore": 45,
+    "gpuScore": 36,
+    "cameraScore": 46,
+    "batteryScore": 74,
+    "dailyScore": 60
+  },
+  {
+    "name": "Dimensity 9300",
+    "cpuScore": 97,
+    "gpuScore": 96,
+    "cameraScore": 90,
+    "batteryScore": 89,
+    "dailyScore": 95
+  },
+  {
+    "name": "Dimensity 8300",
+    "cpuScore": 90,
+    "gpuScore": 88,
+    "cameraScore": 84,
+    "batteryScore": 86,
+    "dailyScore": 91
+  },
+  {
+    "name": "Dimensity 8200",
+    "cpuScore": 86,
+    "gpuScore": 83,
+    "cameraScore": 80,
+    "batteryScore": 84,
+    "dailyScore": 88
+  },
+  {
+    "name": "Dimensity 7050",
+    "cpuScore": 66,
+    "gpuScore": 58,
+    "cameraScore": 62,
+    "batteryScore": 80,
+    "dailyScore": 76
+  },
+  {
+    "name": "Helio G99",
+    "cpuScore": 58,
+    "gpuScore": 50,
+    "cameraScore": 56,
+    "batteryScore": 79,
+    "dailyScore": 70
+  },
+  {
+    "name": "Helio G95",
+    "cpuScore": 54,
+    "gpuScore": 48,
+    "cameraScore": 52,
+    "batteryScore": 70,
+    "dailyScore": 66
+  },
+  {
+    "name": "Helio G85",
+    "cpuScore": 42,
+    "gpuScore": 36,
+    "cameraScore": 44,
+    "batteryScore": 72,
+    "dailyScore": 58
+  },
+  {
+    "name": "Helio P22",
+    "cpuScore": 20,
+    "gpuScore": 18,
+    "cameraScore": 24,
+    "batteryScore": 45,
+    "dailyScore": 32
+  },
+  {
+    "name": "Exynos 2200",
+    "cpuScore": 89,
+    "gpuScore": 86,
+    "cameraScore": 86,
+    "batteryScore": 74,
+    "dailyScore": 86
+  },
+  {
+    "name": "Exynos 1380",
+    "cpuScore": 68,
+    "gpuScore": 60,
+    "cameraScore": 64,
+    "batteryScore": 82,
+    "dailyScore": 78
+  },
+  {
+    "name": "Tensor G3",
+    "cpuScore": 88,
+    "gpuScore": 82,
+    "cameraScore": 92,
+    "batteryScore": 78,
+    "dailyScore": 88
+  },
+  {
+    "name": "Unisoc T606",
+    "cpuScore": 28,
+    "gpuScore": 22,
+    "cameraScore": 30,
+    "batteryScore": 58,
+    "dailyScore": 40
+  }
+]
