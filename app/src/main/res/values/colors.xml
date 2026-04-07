@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black_terminal">#050805</color>
-    <color name="green_terminal">#00FF66</color>
+    <color name="black_terminal">#0A0A0A</color>
+    <color name="green_terminal">#00E676</color>
     <color name="green_soft">#19C96B</color>
-    <color name="green_dark">#0C8F42</color>
-    <color name="text_white">#F5F5F5</color>
-    <color name="text_dark">#111111</color>
-    <color name="text_gray">#7A7A7A</color>
-    <color name="bg_light">#F5F6FA</color>
-    <color name="card_white">#FFFFFF</color>
-    <color name="stroke_soft">#DDE3EA</color>
+    <color name="green_dark">#0F8A43</color>
+
+    <color name="text_white">#F8FAFC</color>
+    <color name="text_dark">#111827</color>
+    <color name="text_gray">#94A3B8</color>
+
+    <color name="bg_light">#0B0F14</color>
+    <color name="card_white">#141A22</color>
+    <color name="stroke_soft">#26303D</color>
 </resources>
