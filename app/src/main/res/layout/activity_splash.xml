@@ -16,39 +16,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:contentDescription="@string/app_name"
-            android:src="@android:drawable/sym_def_app_icon" />
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:foregroundGravity="center">
+
+            <View
+                android:id="@+id/viewGlow"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                android:background="@drawable/glow_logo_bg" />
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_launcher_foreground" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/txtAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="18dp"
             android:text="@string/app_name"
             android:textColor="@color/green_terminal"
-            android:textSize="28sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtTagline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Smart Phone Analysis"
+            android:layout_marginTop="10dp"
+            android:fontFamily="monospace"
+            android:text=""
             android:textColor="@color/green_soft"
             android:textSize="14sp" />
 
         <ProgressBar
             android:id="@+id/progressSplash"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:indeterminateTint="@color/green_terminal" />
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="180dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="22dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/green_terminal"
+            android:progressBackgroundTint="#14331F" />
 
     </LinearLayout>
 
