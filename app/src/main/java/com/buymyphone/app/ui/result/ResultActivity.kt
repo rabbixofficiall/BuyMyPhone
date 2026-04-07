@@ -127,6 +127,11 @@ class ResultActivity : AppCompatActivity() {
             sensorScore
         ) / 8
 
+        val gamingScore = ((cpuScore + gpuScore + displayScore + ramScore) / 4)
+        val photographyScore = ((cameraScore + displayScore + cpuScore) / 3)
+        val dailyUseScore = ((batteryScore + ramScore + storageScore + cpuScore) / 4)
+        val multitaskingScore = ((ramScore + cpuScore + storageScore) / 3)
+
         val modelName = "${Build.BRAND} ${Build.MODEL}"
 
         binding.txtOverallScore.text = "$overallScore/100"
@@ -142,6 +147,15 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Battery: $batteryScore/100")
             appendLine("Camera: $cameraScore/100")
             appendLine("Sensors: $sensorScore/100")
+        }
+
+        binding.txtBestFor.text = buildString {
+            appendLine("Gaming: ${rateLabel(gamingScore)} ($gamingScore/100)")
+            appendLine("Camera: ${rateLabel(photographyScore)} ($photographyScore/100)")
+            appendLine("Daily Use: ${rateLabel(dailyUseScore)} ($dailyUseScore/100)")
+            appendLine("Multitasking: ${rateLabel(multitaskingScore)} ($multitaskingScore/100)")
+            appendLine()
+            appendLine("Top Recommendation: ${getBestForVerdict(gamingScore, photographyScore, dailyUseScore, multitaskingScore)}")
         }
 
         binding.txtRawInfo.text = buildString {
@@ -209,6 +223,9 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Battery: $batteryScore/100")
             appendLine("Camera: $cameraScore/100")
             appendLine("Sensors: $sensorScore/100")
+            appendLine()
+            appendLine("Best For:")
+            appendLine(binding.txtBestFor.text.toString())
             appendLine()
             appendLine("Raw Info:")
             appendLine(binding.txtRawInfo.text.toString())
@@ -409,6 +426,31 @@ class ResultActivity : AppCompatActivity() {
             score >= 70 -> "Very good phone for daily use, multitasking, and moderate gaming."
             score >= 55 -> "Average phone for normal daily tasks and light gaming."
             else -> "Basic phone, better for simple use only."
+        }
+    }
+
+    private fun getBestForVerdict(
+        gamingScore: Int,
+        photographyScore: Int,
+        dailyUseScore: Int,
+        multitaskingScore: Int
+    ): String {
+        val max = maxOf(gamingScore, photographyScore, dailyUseScore, multitaskingScore)
+
+        return when (max) {
+            gamingScore -> "Best suited for gaming and performance-focused users."
+            photographyScore -> "Best suited for camera and content creation."
+            dailyUseScore -> "Best suited for smooth daily use and battery-friendly performance."
+            else -> "Best suited for multitasking and productive everyday usage."
+        }
+    }
+
+    private fun rateLabel(score: Int): String {
+        return when {
+            score >= 85 -> "Excellent"
+            score >= 70 -> "Very Good"
+            score >= 55 -> "Average"
+            else -> "Basic"
         }
     }
 
