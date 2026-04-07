@@ -6,15 +6,27 @@
     android:background="@color/bg_light"
     android:padding="20dp">
 
+    <ImageView
+        android:id="@+id/imgHomeLogo"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
         android:text="BuyMyPhone"
         android:textColor="@color/text_white"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -48,9 +60,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/card_dark_green"
             android:padding="22dp">
 
             <TextView
+                android:id="@+id/txtReadyTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ready to scan"
@@ -59,6 +73,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtReadySubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -69,7 +84,7 @@
             <Button
                 android:id="@+id/btnStartAnalysis"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_neon"
                 android:text="Start Analysis"
@@ -79,7 +94,7 @@
             <Button
                 android:id="@+id/btnAboutApp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#1E2630"
                 android:text="About This App"
@@ -89,7 +104,7 @@
             <Button
                 android:id="@+id/btnGoPremium"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#1E2630"
                 android:text="Go Premium"
