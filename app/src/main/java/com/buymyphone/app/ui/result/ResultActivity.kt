@@ -9,7 +9,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.buymyphone.app.databinding.ActivityResultBinding
 import com.buymyphone.app.detector.DeviceInfoDetector
+import com.buymyphone.app.export.PdfReportExporter
 import com.buymyphone.app.export.TxtReportExporter
+import com.buymyphone.app.matcher.GpuMatcher
+import com.buymyphone.app.matcher.SocMatcher
 import com.buymyphone.app.ui.home.HomeActivity
 import com.buymyphone.app.ui.report.ReportPreviewActivity
 import com.buymyphone.app.utils.DeviceFormatUtils
@@ -34,6 +37,27 @@ class ResultActivity : AppCompatActivity() {
             }
         }
 
+    private val createPdfDocumentLauncher =
+        registerForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { uri: Uri? ->
+            if (uri == null) {
+                Toast.makeText(this, "PDF save cancelled", Toast.LENGTH_SHORT).show()
+                return@registerForActivityResult
+            }
+
+            val success = PdfReportExporter.export(
+                context = this,
+                uri = uri,
+                title = "BuyMyPhone Report",
+                reportText = reportText
+            )
+
+            if (success) {
+                Toast.makeText(this, "PDF report saved successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Failed to save PDF report", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
@@ -41,13 +65,16 @@ class ResultActivity : AppCompatActivity() {
 
         val basicInfo = DeviceInfoDetector.getBasicDeviceInfo(this)
 
-        val cpuScore = getCpuScore(
+        val matchedSoc = SocMatcher.findBestSocMatch(this, basicInfo.socModel)
+        val matchedGpu = GpuMatcher.findBestGpuMatch(this, basicInfo.gpuRenderer)
+
+        val cpuScore = matchedSoc?.cpuScore ?: getCpuScoreFallback(
             coreCount = basicInfo.coreCount,
             maxCpuFreqMHz = basicInfo.maxCpuFreqMHz,
             socModel = basicInfo.socModel
         )
 
-        val gpuScore = getGpuScore(
+        val gpuScore = matchedGpu?.score ?: matchedSoc?.gpuScore ?: getGpuScoreFallback(
             gpuRenderer = basicInfo.gpuRenderer,
             gpuVersion = basicInfo.gpuVersion
         )
@@ -61,14 +88,33 @@ class ResultActivity : AppCompatActivity() {
             refreshRate = basicInfo.refreshRate
         )
 
-        val batteryScore = getBatteryScore(
+        val batteryScore = matchedSoc?.batteryScore ?: getBatteryScore(
             batteryLevelPercent = basicInfo.batteryLevelPercent,
             batteryHealthText = basicInfo.batteryHealthText,
             isCharging = basicInfo.isCharging
         )
 
-        val cameraScore = 62
-        val sensorScore = 85
+        val cameraScore = matchedSoc?.cameraScore ?: getCameraScore(
+            rearCameraCount = basicInfo.rearCameraCount,
+            bestRearCameraMp = basicInfo.bestRearCameraMp,
+            hasOis = basicInfo.hasOis,
+            hasAutoFocus = basicInfo.hasAutoFocus,
+            hasVideoStabilization = basicInfo.hasVideoStabilization,
+            supportsRaw = basicInfo.supportsRaw,
+            supports4k = basicInfo.supports4k
+        )
+
+        val sensorScore = getSensorScore(
+            hasAccelerometer = basicInfo.hasAccelerometer,
+            hasGyroscope = basicInfo.hasGyroscope,
+            hasProximity = basicInfo.hasProximity,
+            hasLightSensor = basicInfo.hasLightSensor,
+            hasMagneticField = basicInfo.hasMagneticField,
+            hasBarometer = basicInfo.hasBarometer,
+            hasStepCounter = basicInfo.hasStepCounter,
+            hasRotationVector = basicInfo.hasRotationVector,
+            hasHeartRate = basicInfo.hasHeartRate
+        )
 
         val overallScore = (
             cpuScore +
@@ -116,6 +162,7 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Battery Health: ${basicInfo.batteryHealthText}")
             appendLine("SoC Model: ${basicInfo.socModel}")
             appendLine("SoC Manufacturer: ${basicInfo.socManufacturer}")
+            appendLine("Matched SoC Preset: ${matchedSoc?.name ?: "No exact match"}")
             appendLine("Hardware: ${basicInfo.hardware}")
             appendLine("Board: ${basicInfo.board}")
             appendLine("CPU Cores: ${basicInfo.coreCount}")
@@ -124,8 +171,28 @@ class ResultActivity : AppCompatActivity() {
             appendLine("GPU Renderer: ${basicInfo.gpuRenderer}")
             appendLine("GPU Vendor: ${basicInfo.gpuVendor}")
             appendLine("GPU Version: ${basicInfo.gpuVersion}")
-            appendLine("Camera: Not added yet")
-            appendLine("Sensors Status: Not added yet")
+            appendLine("Matched GPU Preset: ${matchedGpu?.name ?: "No exact match"}")
+            appendLine("Total Sensors: ${basicInfo.totalSensors}")
+            appendLine("Accelerometer: ${yesNo(basicInfo.hasAccelerometer)}")
+            appendLine("Gyroscope: ${yesNo(basicInfo.hasGyroscope)}")
+            appendLine("Proximity: ${yesNo(basicInfo.hasProximity)}")
+            appendLine("Light Sensor: ${yesNo(basicInfo.hasLightSensor)}")
+            appendLine("Magnetic Field: ${yesNo(basicInfo.hasMagneticField)}")
+            appendLine("Barometer: ${yesNo(basicInfo.hasBarometer)}")
+            appendLine("Step Counter: ${yesNo(basicInfo.hasStepCounter)}")
+            appendLine("Rotation Vector: ${yesNo(basicInfo.hasRotationVector)}")
+            appendLine("Heart Rate: ${yesNo(basicInfo.hasHeartRate)}")
+            appendLine("Total Cameras: ${basicInfo.totalCameras}")
+            appendLine("Rear Cameras: ${basicInfo.rearCameraCount}")
+            appendLine("Front Cameras: ${basicInfo.frontCameraCount}")
+            appendLine("Best Rear Camera: ${DeviceFormatUtils.formatDouble(basicInfo.bestRearCameraMp)} MP")
+            appendLine("Best Front Camera: ${DeviceFormatUtils.formatDouble(basicInfo.bestFrontCameraMp)} MP")
+            appendLine("Flash: ${yesNo(basicInfo.hasFlash)}")
+            appendLine("OIS: ${yesNo(basicInfo.hasOis)}")
+            appendLine("Autofocus: ${yesNo(basicInfo.hasAutoFocus)}")
+            appendLine("Video Stabilization: ${yesNo(basicInfo.hasVideoStabilization)}")
+            appendLine("RAW Support: ${yesNo(basicInfo.supportsRaw)}")
+            appendLine("4K Recording: ${yesNo(basicInfo.supports4k)}")
         }
 
         reportText = buildString {
@@ -144,33 +211,13 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Sensors: $sensorScore/100")
             appendLine()
             appendLine("Raw Info:")
-            appendLine("Model: $modelName")
-            appendLine("Android Version: ${basicInfo.androidVersion}")
-            appendLine("SDK: ${basicInfo.sdkInt}")
-            appendLine("Security Patch: ${basicInfo.securityPatch}")
-            appendLine("RAM: ${DeviceFormatUtils.formatDouble(basicInfo.totalRamGb)} GB")
-            appendLine("Available RAM: ${DeviceFormatUtils.formatDouble(basicInfo.availableRamGb)} GB")
-            appendLine("Storage: ${DeviceFormatUtils.formatDouble(basicInfo.totalStorageGb)} GB")
-            appendLine("Available Storage: ${DeviceFormatUtils.formatDouble(basicInfo.availableStorageGb)} GB")
-            appendLine("Display: ${basicInfo.displayWidth} x ${basicInfo.displayHeight}")
-            appendLine("Refresh Rate: ${DeviceFormatUtils.formatDouble(basicInfo.refreshRate.toDouble())} Hz")
-            appendLine("Density: ${basicInfo.densityDpi} dpi")
-            appendLine("Battery Level: ${basicInfo.batteryLevelPercent}%")
-            appendLine("Battery Temp: ${DeviceFormatUtils.formatDouble(basicInfo.batteryTemperatureCelsius.toDouble())} °C")
-            appendLine("Charging: ${if (basicInfo.isCharging) "Yes" else "No"}")
-            appendLine("Battery Health: ${basicInfo.batteryHealthText}")
-            appendLine("SoC Model: ${basicInfo.socModel}")
-            appendLine("SoC Manufacturer: ${basicInfo.socManufacturer}")
-            appendLine("Hardware: ${basicInfo.hardware}")
-            appendLine("Board: ${basicInfo.board}")
-            appendLine("CPU Cores: ${basicInfo.coreCount}")
-            appendLine("Max CPU Frequency: ${basicInfo.maxCpuFreqMHz} MHz")
-            appendLine("Supported ABIs: ${basicInfo.supportedAbis}")
-            appendLine("GPU Renderer: ${basicInfo.gpuRenderer}")
-            appendLine("GPU Vendor: ${basicInfo.gpuVendor}")
-            appendLine("GPU Version: ${basicInfo.gpuVersion}")
-            appendLine("Camera: Not added yet")
-            appendLine("Sensors Status: Not added yet")
+            appendLine(binding.txtRawInfo.text.toString())
+            appendLine()
+            appendLine("Camera Summary:")
+            basicInfo.cameraSummaryLines.forEach { appendLine(it) }
+            appendLine()
+            appendLine("Sensor Names:")
+            basicInfo.sensorNames.forEach { appendLine(it) }
             appendLine()
             appendLine("Verdict:")
             appendLine(getVerdict(overallScore))
@@ -187,7 +234,7 @@ class ResultActivity : AppCompatActivity() {
         }
 
         binding.btnDownloadPdf.setOnClickListener {
-            Toast.makeText(this, "PDF download will be added in next step", Toast.LENGTH_SHORT).show()
+            createPdfDocumentLauncher.launch("buymyphone_report.pdf")
         }
 
         binding.btnBackHomeFromResult.setOnClickListener {
@@ -198,7 +245,7 @@ class ResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCpuScore(coreCount: Int, maxCpuFreqMHz: Int, socModel: String): Int {
+    private fun getCpuScoreFallback(coreCount: Int, maxCpuFreqMHz: Int, socModel: String): Int {
         if (socModel.contains("Snapdragon 8", ignoreCase = true)) return 94
         if (socModel.contains("Snapdragon 7", ignoreCase = true)) return 78
         if (socModel.contains("Snapdragon 6", ignoreCase = true)) return 62
@@ -225,7 +272,7 @@ class ResultActivity : AppCompatActivity() {
         return (coreScore + freqScore) / 2
     }
 
-    private fun getGpuScore(gpuRenderer: String, gpuVersion: String): Int {
+    private fun getGpuScoreFallback(gpuRenderer: String, gpuVersion: String): Int {
         if (gpuRenderer.contains("Adreno 750", ignoreCase = true)) return 95
         if (gpuRenderer.contains("Adreno 740", ignoreCase = true)) return 92
         if (gpuRenderer.contains("Adreno 730", ignoreCase = true)) return 88
@@ -297,13 +344,61 @@ class ResultActivity : AppCompatActivity() {
             else -> 40
         }
 
-        if (batteryHealthText.equals("Good", ignoreCase = true)) {
-            score += 5
+        if (batteryHealthText.equals("Good", ignoreCase = true)) score += 5
+        if (isCharging) score += 2
+
+        return score.coerceAtMost(100)
+    }
+
+    private fun getCameraScore(
+        rearCameraCount: Int,
+        bestRearCameraMp: Double,
+        hasOis: Boolean,
+        hasAutoFocus: Boolean,
+        hasVideoStabilization: Boolean,
+        supportsRaw: Boolean,
+        supports4k: Boolean
+    ): Int {
+        var score = when {
+            bestRearCameraMp >= 108 -> 80
+            bestRearCameraMp >= 64 -> 72
+            bestRearCameraMp >= 48 -> 65
+            bestRearCameraMp >= 16 -> 55
+            bestRearCameraMp > 0 -> 45
+            else -> 20
         }
 
-        if (isCharging) {
-            score += 2
-        }
+        if (rearCameraCount >= 3) score += 6
+        if (hasOis) score += 8
+        if (hasAutoFocus) score += 5
+        if (hasVideoStabilization) score += 5
+        if (supportsRaw) score += 4
+        if (supports4k) score += 5
+
+        return score.coerceAtMost(100)
+    }
+
+    private fun getSensorScore(
+        hasAccelerometer: Boolean,
+        hasGyroscope: Boolean,
+        hasProximity: Boolean,
+        hasLightSensor: Boolean,
+        hasMagneticField: Boolean,
+        hasBarometer: Boolean,
+        hasStepCounter: Boolean,
+        hasRotationVector: Boolean,
+        hasHeartRate: Boolean
+    ): Int {
+        var score = 0
+        if (hasAccelerometer) score += 12
+        if (hasGyroscope) score += 15
+        if (hasProximity) score += 10
+        if (hasLightSensor) score += 10
+        if (hasMagneticField) score += 12
+        if (hasBarometer) score += 10
+        if (hasStepCounter) score += 8
+        if (hasRotationVector) score += 13
+        if (hasHeartRate) score += 10
 
         return score.coerceAtMost(100)
     }
@@ -315,5 +410,9 @@ class ResultActivity : AppCompatActivity() {
             score >= 55 -> "Average phone for normal daily tasks and light gaming."
             else -> "Basic phone, better for simple use only."
         }
+    }
+
+    private fun yesNo(value: Boolean): String {
+        return if (value) "Yes" else "No"
     }
 }
