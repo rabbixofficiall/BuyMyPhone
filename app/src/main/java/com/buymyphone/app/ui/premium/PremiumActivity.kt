@@ -18,7 +18,12 @@ class PremiumActivity : AppCompatActivity() {
         }
 
         binding.btnUnlockPremium.setOnClickListener {
-            binding.txtPremiumStatus.text = "Billing system will be connected in the next batch."
+            binding.txtPremiumStatus.text = """
+• Billing system will be connected in the next batch.
+• Premium users will get ad-free experience.
+• Advanced reports and extra score modules will be unlocked.
+• Future updates will include full premium activation.
+            """.trimIndent()
         }
     }
 }
