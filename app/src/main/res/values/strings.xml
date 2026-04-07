@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BuyMyPhone</string>
+
+    <!-- Replace these with your real AdMob IDs later -->
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_home">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_banner_result">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
