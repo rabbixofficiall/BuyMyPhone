@@ -51,6 +51,7 @@ class AnalysisActivity : AppCompatActivity() {
     private fun startLiveAnalysis() {
         currentStepIndex = 0
         logBuilder.clear()
+        binding.txtCurrentStatus.text = "> BOOT_SEQUENCE"
         binding.txtLiveLog.text = "[BOOT] Starting analysis engine...\n"
         runNextStep()
     }
