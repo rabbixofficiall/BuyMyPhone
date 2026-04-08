@@ -2,175 +2,51 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light">
+    android:background="#0B0F14">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_launcher_foreground"/>
+        <!-- Circular Score -->
+        <com.buymyphone.app.ui.view.CircularScoreView
+            android:id="@+id/circularScore"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BuyMyPhone Result"
-            android:textColor="@color/text_white"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"/>
-
-        <!-- Overall Card -->
+        <!-- Glass Card -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_dark_green"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/glass_bg"
             android:padding="18dp"
-            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <TextView
-                android:text="Overall Score"
-                android:textColor="@color/text_gray"
-                android:textSize="14sp"/>
-
-            <TextView
-                android:id="@+id/txtOverallScore"
-                android:text="85/100"
-                android:textColor="@color/text_white"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginTop="6dp"/>
-
-            <ProgressBar
-                android:id="@+id/progressOverall"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_marginTop="10dp"
-                android:progressDrawable="@drawable/progress_custom"/>
+                android:text="Device Summary"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/txtVerdict"
-                android:text="Very Good phone"
-                android:textColor="@color/text_white"
+                android:textColor="#E2E8F0"
                 android:layout_marginTop="10dp"/>
 
         </LinearLayout>
-
-        <!-- Item Scores -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/card_dark_green"
-            android:padding="18dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="Item Scores"
-                android:textColor="@color/text_white"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtItemScores"
-                android:textColor="@color/text_white"
-                android:layout_marginTop="10dp"/>
-
-        </LinearLayout>
-
-        <!-- Best For -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/card_dark_green"
-            android:padding="18dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="Best For"
-                android:textColor="@color/text_white"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtBestFor"
-                android:textColor="@color/text_white"
-                android:layout_marginTop="10dp"/>
-
-        </LinearLayout>
-
-        <!-- Raw Info -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/card_dark_green"
-            android:padding="18dp"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="Raw Device Info"
-                android:textColor="@color/text_white"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/txtRawInfo"
-                android:textColor="@color/text_white"
-                android:layout_marginTop="10dp"/>
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/adContainerResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"/>
 
         <!-- Buttons -->
-        <Button
-            android:id="@+id/btnPreviewReport"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_neon"
-            android:text="Preview Report"
-            android:textColor="@color/text_white"/>
-
         <Button
             android:id="@+id/btnDownloadTxt"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1E2630"
             android:text="Download TXT"
-            android:textColor="@color/text_white"/>
-
-        <Button
-            android:id="@+id/btnDownloadPdf"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1E2630"
-            android:text="Download PDF"
-            android:textColor="@color/text_white"/>
-
-        <Button
-            android:id="@+id/btnBackHomeFromResult"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1E2630"
-            android:text="Back"
-            android:textColor="@color/text_white"/>
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_neon"/>
 
     </LinearLayout>
 </ScrollView>
