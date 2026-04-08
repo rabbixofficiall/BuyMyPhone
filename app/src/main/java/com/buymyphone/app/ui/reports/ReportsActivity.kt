@@ -22,10 +22,12 @@ class ReportsActivity : AppCompatActivity() {
         val reports = ReportHistoryManager.getReports(this)
 
         val titles = if (reports.isEmpty()) {
-            listOf("No reports found")
+            listOf("No saved reports yet")
         } else {
-            val df = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault())
-            reports.map { "${it.title}\n${df.format(Date(it.timestamp))}" }
+            val formatter = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault())
+            reports.map {
+                "${it.title}\n${formatter.format(Date(it.timestamp))}"
+            }
         }
 
         val adapter = ArrayAdapter(
