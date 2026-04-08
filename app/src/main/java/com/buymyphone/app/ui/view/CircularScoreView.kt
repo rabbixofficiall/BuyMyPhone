@@ -2,13 +2,17 @@ package com.buymyphone.app.ui.view
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import kotlin.math.min
 
 class CircularScoreView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : View(context, attrs) {
 
     private var score = 0f
@@ -30,7 +34,7 @@ class CircularScoreView @JvmOverloads constructor(
         color = Color.WHITE
         textAlign = Paint.Align.CENTER
         textSize = 80f
-        typeface = Typeface.DEFAULT_BOLD
+        isFakeBoldText = true
     }
 
     fun setScoreAnimated(target: Int) {
@@ -46,7 +50,7 @@ class CircularScoreView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val size = min(width, height)
+        val size = min(width, height).toFloat()
         val radius = size / 2f - 30f
         val cx = width / 2f
         val cy = height / 2f
@@ -56,6 +60,6 @@ class CircularScoreView @JvmOverloads constructor(
         val rect = RectF(cx - radius, cy - radius, cx + radius, cy + radius)
         canvas.drawArc(rect, -90f, (score / 100f) * 360f, false, progressPaint)
 
-        canvas.drawText("${score.toInt()}", cx, cy + 25f, textPaint)
+        canvas.drawText(score.toInt().toString(), cx, cy + 25f, textPaint)
     }
 }
