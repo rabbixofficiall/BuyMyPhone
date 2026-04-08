@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#000000">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,9 +14,9 @@
             android:id="@+id/txtPreviewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Report Preview"
-            android:textColor="#111111"
-            android:textSize="28sp"
+            android:text="REPORT PREVIEW"
+            android:textColor="#00E676"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
@@ -24,37 +24,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="This is the generated device report preview."
-            android:textColor="#666666"
+            android:fontFamily="monospace"
+            android:text="Detailed analysis report"
+            android:textColor="#00FF88"
             android:textSize="14sp" />
 
-        <com.google.android.material.card.MaterialCardView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <TextView
+            android:id="@+id/txtReportContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="4dp">
-
-            <TextView
-                android:id="@+id/txtReportContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="18dp"
-                android:textColor="#333333"
-                android:textSize="14sp"
-                android:lineSpacingExtra="6dp"
-                android:textIsSelectable="true" />
-
-        </com.google.android.material.card.MaterialCardView>
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="5dp"
+            android:textColor="#00E676"
+            android:textIsSelectable="true"
+            android:textSize="13sp" />
 
         <Button
             android:id="@+id/btnClosePreview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="20dp"
-            android:text="Back" />
+            android:backgroundTint="#1E2630"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
-
 </ScrollView>
