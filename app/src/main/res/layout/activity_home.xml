@@ -2,68 +2,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#0B0F14"
+    android:orientation="vertical"
     android:padding="20dp">
 
-    <!-- App Title -->
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BuyMyPhone"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <!-- Subtitle -->
-    <TextView
-        android:id="@+id/txtSubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Smart device analyzer"
-        android:textColor="#94A3B8"
-        android:textSize="14sp"
-        android:layout_marginTop="6dp" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <!-- Spacer -->
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BuyMyPhone"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Smart device analyzer"
+                android:textColor="#94A3B8"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnMoreMenu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="More"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_more"
+            android:tint="#FFFFFF" />
+
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="30dp" />
 
-    <!-- Start Button -->
     <Button
         android:id="@+id/btnStartAnalysis"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="@drawable/button_neon"
         android:text="Start Analysis"
         android:textAllCaps="false"
-        android:background="@drawable/button_neon"
         android:textColor="#000000" />
 
-    <!-- About Button -->
-    <Button
-        android:id="@+id/btnAboutApp"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="12dp"
-        android:text="About This App"
-        android:textAllCaps="false"
-        android:backgroundTint="#1E2630"
-        android:textColor="#FFFFFF" />
-
-    <!-- Premium Button -->
     <Button
         android:id="@+id/btnGoPremium"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
+        android:backgroundTint="#1E2630"
         android:text="Go Premium"
         android:textAllCaps="false"
-        android:backgroundTint="#1E2630"
         android:textColor="#FFFFFF" />
 
-    <!-- Ad Container -->
     <FrameLayout
         android:id="@+id/adContainerHome"
         android:layout_width="wrap_content"
