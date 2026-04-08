@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/glow_bg"
-    android:gravity="center" />
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <size
+        android:width="140dp"
+        android:height="140dp" />
+
+    <gradient
+        android:type="radial"
+        android:centerX="50%"
+        android:centerY="50%"
+        android:gradientRadius="70dp"
+        android:startColor="#5500E676"
+        android:centerColor="#2200E676"
+        android:endColor="#0000E676" />
+
+</shape>
