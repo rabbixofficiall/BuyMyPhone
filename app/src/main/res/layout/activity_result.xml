@@ -1,52 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0B0F14">
+package com.buymyphone.app.ui.result
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+import android.os.Build
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.buymyphone.app.databinding.ActivityResultBinding
 
-        <!-- Circular Score -->
-        <com.buymyphone.app.ui.view.CircularScoreView
-            android:id="@+id/circularScore"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:layout_gravity="center"/>
+class ResultActivity : AppCompatActivity() {
 
-        <!-- Glass Card -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/glass_bg"
-            android:padding="18dp"
-            android:orientation="vertical">
+    private lateinit var binding: ActivityResultBinding
 
-            <TextView
-                android:text="Device Summary"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-            <TextView
-                android:id="@+id/txtVerdict"
-                android:textColor="#E2E8F0"
-                android:layout_marginTop="10dp"/>
+        loadFakeAnalysis() // demo data (stable, no crash)
+    }
 
-        </LinearLayout>
+    private fun loadFakeAnalysis() {
 
-        <!-- Buttons -->
-        <Button
-            android:id="@+id/btnDownloadTxt"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="Download TXT"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_neon"/>
+        // 🔥 REAL DEVICE NAME (no demo device issue)
+        val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
 
-    </LinearLayout>
-</ScrollView>
+        // 🔥 smart calculated score (simple but realistic)
+        val overallScore = calculateScore()
+
+        // 🔵 Circular animation
+        binding.circularScore.setScoreAnimated(overallScore)
+
+        // 🧠 Verdict
+        val verdict = getVerdict(overallScore)
+
+        // 🧊 Show summary
+        binding.txtVerdict.text = """
+Device: $deviceName
+
+Score: $overallScore / 100
+
+$verdict
+        """.trimIndent()
+    }
+
+    private fun calculateScore(): Int {
+        val sdkScore = when {
+            Build.VERSION.SDK_INT >= 33 -> 90
+            Build.VERSION.SDK_INT >= 30 -> 80
+            Build.VERSION.SDK_INT >= 28 -> 70
+            else -> 60
+        }
+
+        val brandBoost = when {
+            Build.BRAND.contains("samsung", true) -> 5
+            Build.BRAND.contains("xiaomi", true) -> 4
+            Build.BRAND.contains("realme", true) -> 4
+            else -> 2
+        }
+
+        val modelLengthFactor = Build.MODEL.length % 5
+
+        return (sdkScore + brandBoost + modelLengthFactor).coerceAtMost(100)
+    }
+
+    private fun getVerdict(score: Int): String {
+        return when {
+            score >= 90 -> "🔥 Flagship performance. Excellent for gaming & heavy use."
+            score >= 75 -> "⚡ Very good device. Smooth daily usage and multitasking."
+            score >= 60 -> "👍 Decent performance. Good for normal tasks."
+            else -> "⚠️ Basic device. Suitable for light usage only."
+        }
+    }
+}
