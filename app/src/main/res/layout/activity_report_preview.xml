@@ -11,44 +11,32 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/txtPreviewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="REPORT PREVIEW"
-            android:textColor="#00E676"
+            android:textColor="#00FF88"
             android:textSize="26sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txtPreviewSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="monospace"
-            android:text="Detailed analysis report"
-            android:textColor="#00FF88"
-            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtReportContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="16dp"
+            android:textColor="#00FF88"
             android:fontFamily="monospace"
-            android:lineSpacingExtra="5dp"
-            android:textColor="#00E676"
-            android:textIsSelectable="true"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:lineSpacingExtra="5dp" />
 
         <Button
             android:id="@+id/btnClosePreview"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#1E2630"
             android:text="Back"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1E2630" />
 
     </LinearLayout>
+
 </ScrollView>
