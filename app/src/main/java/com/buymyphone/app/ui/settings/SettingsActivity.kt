@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.buymyphone.app.databinding.ActivitySettingsBinding
 import com.buymyphone.app.settings.SettingsManager
+import com.buymyphone.app.ui.premium.PremiumActivity
 import com.buymyphone.app.ui.reports.ReportsActivity
 
 class SettingsActivity : AppCompatActivity() {
@@ -25,6 +26,10 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.btnOpenReports.setOnClickListener {
             startActivity(Intent(this, ReportsActivity::class.java))
+        }
+
+        binding.btnGoPremiumSettings.setOnClickListener {
+            startActivity(Intent(this, PremiumActivity::class.java))
         }
 
         binding.btnBackSettings.setOnClickListener {
