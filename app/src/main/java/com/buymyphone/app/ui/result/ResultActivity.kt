@@ -77,10 +77,12 @@ class ResultActivity : AppCompatActivity() {
             basicInfo.displayHeight,
             basicInfo.refreshRate
         )
+
         val storagePreset = PresetRuleEngine.getStoragePreset(
             basicInfo.totalStorageGb,
             basicInfo.socModel
         )
+
         val cameraPreset = PresetRuleEngine.getCameraPreset(
             basicInfo.bestRearCameraMp,
             basicInfo.hasOis,
@@ -108,14 +110,22 @@ class ResultActivity : AppCompatActivity() {
             basicInfo.hasHeartRate
         )
 
-        val overallScore = (cpuScore + gpuScore + ramScore + storageScore + displayScore + batteryScore + cameraScore + sensorScore) / 8
+        val overallScore = (
+            cpuScore + gpuScore + ramScore + storageScore +
+                displayScore + batteryScore + cameraScore + sensorScore
+            ) / 8
 
         val gamingScore = (cpuScore + gpuScore + displayScore + ramScore) / 4
         val cameraUseScore = (cameraScore + displayScore + cpuScore) / 3
         val dailyUseScore = (batteryScore + ramScore + storageScore + cpuScore) / 4
         val multitaskingScore = (ramScore + storageScore + cpuScore) / 3
 
-        val bestPurpose = buildBestPurpose(gamingScore, cameraUseScore, dailyUseScore, multitaskingScore)
+        val bestPurpose = buildBestPurpose(
+            gamingScore,
+            cameraUseScore,
+            dailyUseScore,
+            multitaskingScore
+        )
 
         binding.circularScore.setScoreAnimated(overallScore)
         binding.txtVerdict.text = bestPurpose
@@ -142,6 +152,7 @@ class ResultActivity : AppCompatActivity() {
         val title = "${Build.MANUFACTURER} ${Build.MODEL} - ${
             SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault()).format(Date())
         }"
+
         ReportHistoryManager.saveReport(this, title, reportText)
     }
 
@@ -359,4 +370,10 @@ class ResultActivity : AppCompatActivity() {
         if (hasStepCounter) score += 8
         if (hasRotationVector) score += 13
         if (hasHeartRate) score += 10
-        return score.coerceAtMost(100
+        return score.coerceAtMost(100)
+    }
+
+    private fun yesNo(value: Boolean): String {
+        return if (value) "Yes" else "No"
+    }
+                       }
