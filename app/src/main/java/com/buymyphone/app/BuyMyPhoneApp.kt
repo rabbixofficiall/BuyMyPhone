@@ -1,7 +1,6 @@
 package com.buymyphone.app
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import com.buymyphone.app.settings.SettingsManager
 import com.google.android.gms.ads.MobileAds
