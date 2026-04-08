@@ -2,11 +2,14 @@ package com.buymyphone.app.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import com.buymyphone.app.R
 import com.buymyphone.app.databinding.ActivityHomeBinding
 import com.buymyphone.app.ui.about.AboutActivity
 import com.buymyphone.app.ui.analysis.AnalysisActivity
 import com.buymyphone.app.ui.premium.PremiumActivity
+import com.buymyphone.app.ui.settings.SettingsActivity
 
 class HomeActivity : AppCompatActivity() {
 
@@ -21,12 +24,33 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, AnalysisActivity::class.java))
         }
 
-        binding.btnAboutApp.setOnClickListener {
-            startActivity(Intent(this, AboutActivity::class.java))
-        }
-
         binding.btnGoPremium.setOnClickListener {
             startActivity(Intent(this, PremiumActivity::class.java))
         }
+
+        binding.btnMoreMenu.setOnClickListener {
+            showPopupMenu()
+        }
+    }
+
+    private fun showPopupMenu() {
+        val popupMenu = PopupMenu(this, binding.btnMoreMenu)
+        popupMenu.menuInflater.inflate(R.menu.menu_home, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.menu_about -> {
+                    startActivity(Intent(this, AboutActivity::class.java))
+                    true
+                }
+                R.id.menu_settings -> {
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+
+        popupMenu.show()
     }
 }
