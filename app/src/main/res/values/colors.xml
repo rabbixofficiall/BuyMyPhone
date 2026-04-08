@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Light mode -->
+    <!-- Main theme -->
     <color name="screen_bg">#F5F7FB</color>
     <color name="card_bg">#FFFFFF</color>
     <color name="toolbar_bg">#FFFFFF</color>
@@ -17,12 +17,13 @@
     <color name="accent_green_dark">#00C853</color>
     <color name="accent_black_text">#001B0A</color>
 
-    <!-- Analysis / Preview -->
+    <!-- Analysis / preview -->
     <color name="analysis_bg">#F3FFF8</color>
     <color name="analysis_primary">#00A85A</color>
     <color name="analysis_secondary">#008C4B</color>
 
-    <!-- Legacy compatibility -->
+    <!-- Compatibility -->
+    <color name="bg_light">#F5F7FB</color>
     <color name="black_terminal">#000000</color>
     <color name="green_terminal">#00E676</color>
     <color name="green_soft">#00E676</color>
