@@ -1,127 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light"
+    android:orientation="vertical"
+    android:background="#0B0F14"
     android:padding="20dp">
 
-    <ImageView
-        android:id="@+id/imgHomeLogo"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+    <!-- App Title -->
     <TextView
         android:id="@+id/txtTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
         android:text="BuyMyPhone"
-        android:textColor="@color/text_white"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/txtSubtitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Analyze your phone and get smart hardware scores."
-        android:textColor="@color/text_gray"
-        android:textSize="15sp"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="Smart device analyzer"
+        android:textColor="#94A3B8"
+        android:textSize="14sp"
+        android:layout_marginTop="6dp" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardMain"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        app:cardBackgroundColor="@color/card_white"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="8dp"
-        app:strokeColor="@color/stroke_soft"
-        app:strokeWidth="1dp"
-        app:layout_constraintTop_toBottomOf="@id/txtSubtitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    <!-- Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/card_dark_green"
-            android:padding="22dp">
+    <!-- Start Button -->
+    <Button
+        android:id="@+id/btnStartAnalysis"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Start Analysis"
+        android:textAllCaps="false"
+        android:background="@drawable/button_neon"
+        android:textColor="#000000" />
 
-            <TextView
-                android:id="@+id/txtReadyTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ready to scan"
-                android:textColor="@color/text_white"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+    <!-- About Button -->
+    <Button
+        android:id="@+id/btnAboutApp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:text="About This App"
+        android:textAllCaps="false"
+        android:backgroundTint="#1E2630"
+        android:textColor="#FFFFFF" />
 
-            <TextView
-                android:id="@+id/txtReadySubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Tap start to begin a full live hardware analysis."
-                android:textColor="@color/text_gray"
-                android:textSize="14sp" />
+    <!-- Premium Button -->
+    <Button
+        android:id="@+id/btnGoPremium"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:text="Go Premium"
+        android:textAllCaps="false"
+        android:backgroundTint="#1E2630"
+        android:textColor="#FFFFFF" />
 
-            <Button
-                android:id="@+id/btnStartAnalysis"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_neon"
-                android:text="Start Analysis"
-                android:textAllCaps="false"
-                android:textColor="@color/text_white" />
-
-            <Button
-                android:id="@+id/btnAboutApp"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="#1E2630"
-                android:text="About This App"
-                android:textAllCaps="false"
-                android:textColor="@color/text_white" />
-
-            <Button
-                android:id="@+id/btnGoPremium"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="#1E2630"
-                android:text="Go Premium"
-                android:textAllCaps="false"
-                android:textColor="@color/text_white" />
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
+    <!-- Ad Container -->
     <FrameLayout
         android:id="@+id/adContainerHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/cardMain"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="20dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
