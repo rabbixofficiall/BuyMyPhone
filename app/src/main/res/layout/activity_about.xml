@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light">
+    android:background="#0B0F14">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,133 +15,76 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="About This App"
-            android:textColor="@color/text_white"
+            android:textColor="#FFFFFF"
             android:textSize="28sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:cardBackgroundColor="@color/card_white"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="4dp"
-            app:strokeColor="@color/stroke_soft"
-            app:strokeWidth="1dp">
+            android:background="@drawable/glass_bg"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/txtAppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BuyMyPhone"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Version 1.0"
+                android:textColor="#94A3B8"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:layout_marginTop="16dp"
+                android:text="BuyMyPhone is a smart Android device analyzer app that checks phone hardware, sensors, software, and supported features. It gives item-wise scores, overall rating, and downloadable reports."
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/txtAppName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="BuyMyPhone"
-                    android:textColor="@color/text_white"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/txtVersion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Version 1.0"
-                    android:textColor="@color/text_gray"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/txtDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="BuyMyPhone is a smart Android device analyzer app that checks phone hardware, sensors, software, and supported features. It gives item-wise scores, overall rating, and downloadable reports."
-                    android:textColor="@color/text_white"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
+        <Button
+            android:id="@+id/btnMailDeveloper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:cardBackgroundColor="@color/card_white"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="4dp"
-            app:strokeColor="@color/stroke_soft"
-            app:strokeWidth="1dp">
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_neon"
+            android:text="Gmail"
+            android:textAllCaps="false"
+            android:textColor="#000000" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/txtDeveloperTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Developer Information"
-                    android:textColor="@color/text_white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtDeveloperName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="Name: MD Rabbi Hossain"
-                    android:textColor="@color/text_white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/txtDeveloperRole"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Role: Developer"
-                    android:textColor="@color/text_white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/txtDeveloperEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Email: rabbihossainltd@gmail.com"
-                    android:textColor="@color/text_white"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/txtDeveloperPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Phone: +8801731410341"
-                    android:textColor="@color/text_white"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
+        <Button
+            android:id="@+id/btnFacebookDeveloper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1E2630"
+            android:text="Facebook"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/btnBackHome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1E2630"
             android:text="Back"
             android:textAllCaps="false"
-            android:textColor="@color/text_white" />
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
