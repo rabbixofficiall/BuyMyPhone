@@ -8,8 +8,7 @@ import com.buymyphone.app.databinding.ActivityReportsBinding
 import com.buymyphone.app.storage.ReportHistoryManager
 import com.buymyphone.app.ui.report.ReportPreviewActivity
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 class ReportsActivity : AppCompatActivity() {
 
@@ -21,14 +20,12 @@ class ReportsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val reports = ReportHistoryManager.getReports(this)
-        val dateFormat = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault())
 
         val titles = if (reports.isEmpty()) {
-            listOf("No saved reports yet")
+            listOf("No reports found")
         } else {
-            reports.map {
-                "${it.title}\n${dateFormat.format(Date(it.timestamp))}"
-            }
+            val df = SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault())
+            reports.map { "${it.title}\n${df.format(Date(it.timestamp))}" }
         }
 
         val adapter = ArrayAdapter(
@@ -36,6 +33,7 @@ class ReportsActivity : AppCompatActivity() {
             android.R.layout.simple_list_item_1,
             titles
         )
+
         binding.listReports.adapter = adapter
 
         binding.listReports.setOnItemClickListener { _, _, position, _ ->
