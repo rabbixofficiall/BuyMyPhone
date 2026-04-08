@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/hacker_texture">
+    android:background="#000000">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,90 +10,52 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/imgLogoTop"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_launcher_foreground" />
-
         <TextView
             android:id="@+id/txtAnalysisTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="LIVE ANALYSIS"
-            android:textColor="@color/green_terminal"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textColor="#00E676"
+            android:textSize="22sp"/>
 
         <TextView
             android:id="@+id/txtCurrentStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Initializing terminal..."
-            android:textColor="@color/green_soft"
-            android:textSize="15sp" />
+            android:text="Starting..."
+            android:textColor="#00E676"
+            android:layout_marginTop="10dp"/>
 
         <ProgressBar
             android:id="@+id/progressAnalysis"
             android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:layout_marginTop="20dp"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="0"
-            android:progressDrawable="@drawable/progress_custom" />
+            android:layout_height="10dp"
+            android:layout_marginTop="16dp"
+            android:progressDrawable="@drawable/progress_custom"/>
 
         <TextView
             android:id="@+id/txtProgressPercent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="0%"
-            android:textColor="@color/green_terminal"
-            android:textStyle="bold" />
+            android:textColor="#00E676"
+            android:layout_marginTop="6dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/card_dark_green"
-            android:orientation="vertical"
-            android:padding="18dp">
+        <TextView
+            android:id="@+id/txtLogTitle"
+            android:text="TERMINAL"
+            android:textColor="#00E676"
+            android:layout_marginTop="20dp"/>
 
-            <TextView
-                android:id="@+id/txtLogTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TERMINAL LOG"
-                android:textColor="@color/green_terminal"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtLiveLog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:fontFamily="monospace"
-                android:lineSpacingExtra="6dp"
-                android:text="Waiting to start..."
-                android:textColor="@color/green_soft"
-                android:textSize="13sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/txtLiveLog"
+            android:textColor="#00FF88"
+            android:layout_marginTop="10dp"
+            android:fontFamily="monospace"/>
 
         <Button
             android:id="@+id/btnCancelAnalysis"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:text="Cancel"
             android:layout_marginTop="20dp"
             android:backgroundTint="#1E2630"
-            android:text="Abort"
-            android:textAllCaps="false"
-            android:textColor="@color/text_white" />
+            android:textColor="#FFFFFF"/>
 
     </LinearLayout>
+
 </ScrollView>
