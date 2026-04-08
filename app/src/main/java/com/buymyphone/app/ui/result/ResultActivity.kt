@@ -15,40 +15,51 @@ class ResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         loadResult()
-    }
-
-    private fun loadResult() {
-
-        val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
-
-        val score = calculateScore()
-
-        binding.circularScore.setScoreAnimated(score)
-
-        binding.txtVerdict.text = """
-Device: $deviceName
-
-Score: $score / 100
-
-${getVerdict(score)}
-        """.trimIndent()
 
         binding.btnBackHomeFromResult.setOnClickListener {
             finish()
         }
     }
 
+    private fun loadResult() {
+        val manufacturer = Build.MANUFACTURER ?: "Unknown"
+        val model = Build.MODEL ?: "Unknown"
+        val androidVersion = Build.VERSION.RELEASE ?: "Unknown"
+
+        val score = calculateScore()
+
+        binding.circularScore.setScoreAnimated(score)
+
+        binding.txtVerdict.text = """
+Device: $manufacturer $model
+
+Android Version: $androidVersion
+
+Overall Score: $score / 100
+
+${getVerdict(score)}
+        """.trimIndent()
+    }
+
     private fun calculateScore(): Int {
-        val base = Build.VERSION.SDK_INT * 2
-        return base.coerceIn(50, 100)
+        val sdk = Build.VERSION.SDK_INT
+
+        return when {
+            sdk >= 34 -> 95
+            sdk >= 33 -> 90
+            sdk >= 31 -> 84
+            sdk >= 29 -> 78
+            sdk >= 26 -> 70
+            else -> 60
+        }
     }
 
     private fun getVerdict(score: Int): String {
         return when {
-            score >= 90 -> "🔥 Flagship performance"
-            score >= 75 -> "⚡ Very good device"
-            score >= 60 -> "👍 Good for daily use"
-            else -> "⚠️ Basic device"
+            score >= 90 -> "Excellent device for heavy usage."
+            score >= 80 -> "Very good device for gaming and daily use."
+            score >= 70 -> "Good device for normal daily tasks."
+            else -> "Basic device for light use."
         }
     }
 }
