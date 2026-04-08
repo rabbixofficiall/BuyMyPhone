@@ -12,50 +12,71 @@
 
         <TextView
             android:id="@+id/txtAnalysisTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="LIVE ANALYSIS"
             android:textColor="#00E676"
-            android:textSize="22sp"/>
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtCurrentStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="Starting..."
             android:textColor="#00E676"
-            android:layout_marginTop="10dp"/>
+            android:textSize="15sp" />
 
         <ProgressBar
             android:id="@+id/progressAnalysis"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:layout_marginTop="16dp"
-            android:progressDrawable="@drawable/progress_custom"/>
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_custom" />
 
         <TextView
             android:id="@+id/txtProgressPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:text="0%"
             android:textColor="#00E676"
-            android:layout_marginTop="6dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtLogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="TERMINAL"
             android:textColor="#00E676"
-            android:layout_marginTop="20dp"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtLiveLog"
-            android:textColor="#00FF88"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="monospace"/>
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="4dp"
+            android:text="Booting analysis engine..."
+            android:textColor="#00FF88"
+            android:textSize="13sp" />
 
         <Button
             android:id="@+id/btnCancelAnalysis"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Cancel"
             android:layout_marginTop="20dp"
             android:backgroundTint="#1E2630"
-            android:textColor="#FFFFFF"/>
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
-
 </ScrollView>
