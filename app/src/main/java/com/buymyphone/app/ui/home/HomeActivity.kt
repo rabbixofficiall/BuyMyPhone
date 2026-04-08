@@ -3,7 +3,6 @@ package com.buymyphone.app.ui.home
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.buymyphone.app.R
 import com.buymyphone.app.databinding.ActivityHomeBinding
 import com.buymyphone.app.ui.about.AboutActivity
 import com.buymyphone.app.ui.analysis.AnalysisActivity
@@ -20,17 +19,14 @@ class HomeActivity : AppCompatActivity() {
 
         binding.btnStartAnalysis.setOnClickListener {
             startActivity(Intent(this, AnalysisActivity::class.java))
-            overridePendingTransition(R.anim.fade_slide, android.R.anim.fade_out)
         }
 
         binding.btnAboutApp.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
-            overridePendingTransition(R.anim.fade_slide, android.R.anim.fade_out)
         }
 
         binding.btnGoPremium.setOnClickListener {
             startActivity(Intent(this, PremiumActivity::class.java))
-            overridePendingTransition(R.anim.fade_slide, android.R.anim.fade_out)
         }
     }
 }
