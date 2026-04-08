@@ -1,9 +1,36 @@
-<ListView
-    android:id="@+id/listReports"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:divider="#1E293B"
-    android:dividerHeight="1dp"
-    android:padding="10dp"
-    android:background="@drawable/glass_bg"/>
+    android:layout_height="match_parent"
+    android:background="#0B0F14"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reports"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        android:textStyle="bold"/>
+
+    <ListView
+        android:id="@+id/listReports"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:divider="#1E293B"
+        android:dividerHeight="1dp"
+        android:background="#121821"
+        android:padding="10dp"/>
+
+    <Button
+        android:id="@+id/btnBackReports"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Back"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1E2630"/>
+
+</LinearLayout>
