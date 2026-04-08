@@ -19,6 +19,14 @@
             android:value="@string/admob_app_id" />
 
         <activity
+            android:name=".ui.reports.ReportsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.premium.PremiumActivity"
             android:exported="false" />
 
