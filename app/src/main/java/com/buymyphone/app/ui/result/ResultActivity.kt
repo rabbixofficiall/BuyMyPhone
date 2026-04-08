@@ -301,3 +301,62 @@ class ResultActivity : AppCompatActivity() {
             coreCount >= 8 -> 72
             coreCount >= 6 -> 60
             coreCount >= 4 -> 48
+            else -> 35
+        }
+    }
+
+    private fun fallbackGpuScore(gpuRenderer: String): Int {
+        if (gpuRenderer.contains("Adreno 750", true)) return 96
+        if (gpuRenderer.contains("Adreno 740", true)) return 92
+        if (gpuRenderer.contains("Adreno 642", true)) return 72
+        if (gpuRenderer.contains("Mali-G710", true)) return 84
+        if (gpuRenderer.contains("Mali-G57", true)) return 50
+        if (gpuRenderer.contains("PowerVR GE8320", true)) return 18
+        return 40
+    }
+
+    private fun getRamScore(totalRamGb: Double): Int = when {
+        totalRamGb >= 16 -> 95
+        totalRamGb >= 12 -> 88
+        totalRamGb >= 8 -> 78
+        totalRamGb >= 6 -> 68
+        totalRamGb >= 4 -> 55
+        else -> 35
+    }
+
+    private fun getBatteryScore(level: Int, health: String): Int {
+        var score = when {
+            level >= 90 -> 90
+            level >= 70 -> 80
+            level >= 50 -> 68
+            level >= 30 -> 55
+            level >= 0 -> 40
+            else -> 35
+        }
+
+        if (health.equals("Good", true)) score += 5
+        return score.coerceAtMost(100)
+    }
+
+    private fun getSensorScore(
+        hasAccelerometer: Boolean,
+        hasGyroscope: Boolean,
+        hasProximity: Boolean,
+        hasLightSensor: Boolean,
+        hasMagneticField: Boolean,
+        hasBarometer: Boolean,
+        hasStepCounter: Boolean,
+        hasRotationVector: Boolean,
+        hasHeartRate: Boolean
+    ): Int {
+        var score = 0
+        if (hasAccelerometer) score += 12
+        if (hasGyroscope) score += 15
+        if (hasProximity) score += 10
+        if (hasLightSensor) score += 10
+        if (hasMagneticField) score += 12
+        if (hasBarometer) score += 10
+        if (hasStepCounter) score += 8
+        if (hasRotationVector) score += 13
+        if (hasHeartRate) score += 10
+        return score.coerceAtMost(100
