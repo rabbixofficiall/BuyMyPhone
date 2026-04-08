@@ -43,10 +43,40 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnBackHomeFromResult"
+            android:id="@+id/btnPreviewReport"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/button_neon"
+            android:text="Preview Report"
+            android:textAllCaps="false"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/btnDownloadTxt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1E2630"
+            android:text="Download TXT"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnDownloadPdf"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1E2630"
+            android:text="Download PDF"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnBackHomeFromResult"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1E2630"
             android:text="Back"
             android:textAllCaps="false"
