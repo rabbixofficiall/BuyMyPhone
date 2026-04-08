@@ -23,11 +23,7 @@ class CircularScoreView @JvmOverloads constructor(
         style = Paint.Style.STROKE
         strokeWidth = 20f
         strokeCap = Paint.Cap.ROUND
-        shader = SweepGradient(
-            0f, 0f,
-            intArrayOf(Color.parseColor("#00E676"), Color.parseColor("#00C853")),
-            null
-        )
+        color = Color.parseColor("#00E676")
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -51,7 +47,7 @@ class CircularScoreView @JvmOverloads constructor(
         super.onDraw(canvas)
 
         val size = min(width, height)
-        val radius = size / 2 - 30
+        val radius = size / 2f - 30f
         val cx = width / 2f
         val cy = height / 2f
 
@@ -60,6 +56,6 @@ class CircularScoreView @JvmOverloads constructor(
         val rect = RectF(cx - radius, cy - radius, cx + radius, cy + radius)
         canvas.drawArc(rect, -90f, (score / 100f) * 360f, false, progressPaint)
 
-        canvas.drawText("${score.toInt()}", cx, cy + 25, textPaint)
+        canvas.drawText("${score.toInt()}", cx, cy + 25f, textPaint)
     }
 }
