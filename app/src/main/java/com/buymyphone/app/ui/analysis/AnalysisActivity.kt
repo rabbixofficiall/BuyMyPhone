@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.buymyphone.app.R
 import com.buymyphone.app.databinding.ActivityAnalysisBinding
 import com.buymyphone.app.ui.result.ResultActivity
 
@@ -50,7 +49,6 @@ class AnalysisActivity : AppCompatActivity() {
 
     private fun goToResult() {
         startActivity(Intent(this, ResultActivity::class.java))
-        overridePendingTransition(R.anim.fade_slide, android.R.anim.fade_out)
         finish()
     }
 }
