@@ -1,6 +1,9 @@
 package com.buymyphone.app.ui.about
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.buymyphone.app.databinding.ActivityAboutBinding
 
@@ -13,8 +16,41 @@ class AboutActivity : AppCompatActivity() {
         binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnMailDeveloper.setOnClickListener {
+            openEmail()
+        }
+
+        binding.btnFacebookDeveloper.setOnClickListener {
+            openFacebook()
+        }
+
         binding.btnBackHome.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun openEmail() {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:rabbihossainltd@gmail.com")
+            putExtra(Intent.EXTRA_SUBJECT, "BuyMyPhone App")
+        }
+
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openFacebook() {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("https://www.facebook.com/rabbihossainltd")
+        }
+
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Unable to open Facebook", Toast.LENGTH_SHORT).show()
         }
     }
 }
