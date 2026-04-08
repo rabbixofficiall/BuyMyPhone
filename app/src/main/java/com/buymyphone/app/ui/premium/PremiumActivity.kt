@@ -2,56 +2,34 @@ package com.buymyphone.app.ui.premium
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.buymyphone.app.billing.BillingManager
 import com.buymyphone.app.databinding.ActivityPremiumBinding
 
 class PremiumActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPremiumBinding
-    private lateinit var billingManager: BillingManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPremiumBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        billingManager = BillingManager(
-            context = this,
-            onPremiumPurchased = {
-                binding.txtPremiumStatus.text = """
-• Premium is active
-• Ads can be removed
-• Advanced reports can be enabled
-• Extra score modules are ready
-                """.trimIndent()
-            },
-            onMessage = { message ->
-                binding.txtPremiumStatus.text = message
-            }
-        )
-
-        billingManager.startConnection {
-            if (billingManager.isPremiumUser()) {
-                binding.txtPremiumStatus.text = """
-• Premium already active
-• Ad-free experience available
-• Detailed reports unlocked
-• Extra score modules unlocked
-                """.trimIndent()
-            }
-        }
+        binding.txtPremiumStatus.text = """
+• Premium section is ready
+• Ad-free mode can be added later
+• Advanced reports can be added later
+• Extra score modules can be added later
+        """.trimIndent()
 
         binding.btnUnlockPremium.setOnClickListener {
-            billingManager.launchPremiumPurchase(this)
+            binding.txtPremiumStatus.text = """
+• Premium purchase system is not connected yet
+• This screen is prepared for future upgrade
+• You can add billing later without changing UI
+            """.trimIndent()
         }
 
         binding.btnBackPremium.setOnClickListener {
             finish()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        billingManager.endConnection()
     }
 }
