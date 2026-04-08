@@ -13,6 +13,7 @@ import com.buymyphone.app.export.PdfReportExporter
 import com.buymyphone.app.export.TxtReportExporter
 import com.buymyphone.app.matcher.GpuMatcher
 import com.buymyphone.app.matcher.SocMatcher
+import com.buymyphone.app.scoring.PresetRuleEngine
 import com.buymyphone.app.storage.ReportHistoryManager
 import com.buymyphone.app.ui.report.ReportPreviewActivity
 import java.text.SimpleDateFormat
@@ -91,19 +92,30 @@ class ResultActivity : AppCompatActivity() {
         val matchedSoc = SocMatcher.findBestSocMatch(this, basicInfo.socModel)
         val matchedGpu = GpuMatcher.findBestGpuMatch(this, basicInfo.gpuRenderer)
 
-        val cpuScore = matchedSoc?.cpuScore ?: fallbackCpuScore(basicInfo.socModel, basicInfo.coreCount)
-        val gpuScore = matchedGpu?.score ?: matchedSoc?.gpuScore ?: fallbackGpuScore(basicInfo.gpuRenderer)
-        val ramScore = getRamScore(basicInfo.totalRamGb)
-        val storageScore = getStorageScore(basicInfo.totalStorageGb)
-        val displayScore = getDisplayScore(basicInfo.displayWidth, basicInfo.displayHeight, basicInfo.refreshRate)
-        val batteryScore = matchedSoc?.batteryScore ?: getBatteryScore(basicInfo.batteryLevelPercent, basicInfo.batteryHealthText)
-        val cameraScore = matchedSoc?.cameraScore ?: getCameraScore(
+        val displayPreset = PresetRuleEngine.getDisplayPreset(
+            basicInfo.displayWidth,
+            basicInfo.displayHeight,
+            basicInfo.refreshRate
+        )
+        val storagePreset = PresetRuleEngine.getStoragePreset(
+            basicInfo.totalStorageGb,
+            basicInfo.socModel
+        )
+        val cameraPreset = PresetRuleEngine.getCameraPreset(
             basicInfo.bestRearCameraMp,
             basicInfo.hasOis,
             basicInfo.hasAutoFocus,
             basicInfo.hasVideoStabilization,
             basicInfo.supports4k
         )
+
+        val cpuScore = matchedSoc?.cpuScore ?: fallbackCpuScore(basicInfo.socModel, basicInfo.coreCount)
+        val gpuScore = matchedGpu?.score ?: matchedSoc?.gpuScore ?: fallbackGpuScore(basicInfo.gpuRenderer)
+        val ramScore = getRamScore(basicInfo.totalRamGb)
+        val storageScore = storagePreset.score
+        val displayScore = displayPreset.score
+        val batteryScore = matchedSoc?.batteryScore ?: getBatteryScore(basicInfo.batteryLevelPercent, basicInfo.batteryHealthText)
+        val cameraScore = cameraPreset.score
         val sensorScore = getSensorScore(
             basicInfo.hasAccelerometer,
             basicInfo.hasGyroscope,
@@ -132,6 +144,9 @@ class ResultActivity : AppCompatActivity() {
             basicInfo = basicInfo,
             matchedSocName = matchedSoc?.name ?: "No exact preset match",
             matchedGpuName = matchedGpu?.name ?: "No exact preset match",
+            displayPresetLabel = displayPreset.label,
+            storagePresetLabel = storagePreset.label,
+            cameraPresetLabel = cameraPreset.label,
             overallScore = overallScore,
             cpuScore = cpuScore,
             gpuScore = gpuScore,
@@ -155,7 +170,6 @@ class ResultActivity : AppCompatActivity() {
         multitaskingScore: Int
     ): String {
         val max = maxOf(gamingScore, cameraUseScore, dailyUseScore, multitaskingScore)
-
         return when (max) {
             gamingScore -> "Best for Gaming and performance-focused usage."
             cameraUseScore -> "Best for Camera, content creation and media use."
@@ -168,6 +182,9 @@ class ResultActivity : AppCompatActivity() {
         basicInfo: com.buymyphone.app.model.BasicDeviceInfo,
         matchedSocName: String,
         matchedGpuName: String,
+        displayPresetLabel: String,
+        storagePresetLabel: String,
+        cameraPresetLabel: String,
         overallScore: Int,
         cpuScore: Int,
         gpuScore: Int,
@@ -179,10 +196,6 @@ class ResultActivity : AppCompatActivity() {
         sensorScore: Int,
         bestPurpose: String
     ): String {
-        val estimatedStorageType = estimateStorageType(basicInfo.totalStorageGb, basicInfo.socModel)
-        val displayClass = estimateDisplayClass(basicInfo.displayWidth, basicInfo.displayHeight, basicInfo.refreshRate)
-        val cameraTier = estimateCameraTier(basicInfo.bestRearCameraMp, basicInfo.hasOis, basicInfo.supports4k)
-
         return buildString {
             appendLine("BUYMYPHONE REPORT")
             appendLine("================================")
@@ -203,6 +216,14 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Sensor Score: $sensorScore/100")
             appendLine()
 
+            appendLine("Preset Classification:")
+            appendLine("SoC Preset: $matchedSocName")
+            appendLine("GPU Preset: $matchedGpuName")
+            appendLine("Display Preset: $displayPresetLabel")
+            appendLine("Storage Preset: $storagePresetLabel")
+            appendLine("Camera Preset: $cameraPresetLabel")
+            appendLine()
+
             appendLine("Device Information:")
             appendLine("Manufacturer: ${Build.MANUFACTURER}")
             appendLine("Model: ${Build.MODEL}")
@@ -221,20 +242,20 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Available RAM: ${"%.2f".format(Locale.US, basicInfo.availableRamGb)} GB")
             appendLine("Total Storage: ${"%.2f".format(Locale.US, basicInfo.totalStorageGb)} GB")
             appendLine("Available Storage: ${"%.2f".format(Locale.US, basicInfo.availableStorageGb)} GB")
-            appendLine("Estimated Storage Type: $estimatedStorageType")
+            appendLine("Storage Type Class: $storagePresetLabel")
             appendLine()
 
             appendLine("Display Information:")
             appendLine("Resolution: ${basicInfo.displayWidth} x ${basicInfo.displayHeight}")
             appendLine("Refresh Rate: ${"%.2f".format(Locale.US, basicInfo.refreshRate.toDouble())} Hz")
             appendLine("Density: ${basicInfo.densityDpi} dpi")
-            appendLine("Display Class: $displayClass")
+            appendLine("Display Type Class: $displayPresetLabel")
             appendLine()
 
             appendLine("Battery Information:")
             appendLine("Battery Level: ${if (basicInfo.batteryLevelPercent >= 0) "${basicInfo.batteryLevelPercent}%" else "Unknown"}")
             appendLine("Battery Temperature: ${if (basicInfo.batteryTemperatureCelsius >= 0) "${"%.2f".format(Locale.US, basicInfo.batteryTemperatureCelsius.toDouble())} °C" else "Unknown"}")
-            appendLine("Charging: ${if (basicInfo.isCharging) "Yes" else "No"}")
+            appendLine("Charging: ${yesNo(basicInfo.isCharging)}")
             appendLine("Battery Health: ${basicInfo.batteryHealthText}")
             appendLine()
 
@@ -263,7 +284,7 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Video Stabilization: ${yesNo(basicInfo.hasVideoStabilization)}")
             appendLine("RAW Support: ${yesNo(basicInfo.supportsRaw)}")
             appendLine("4K Recording: ${yesNo(basicInfo.supports4k)}")
-            appendLine("Camera Tier: $cameraTier")
+            appendLine("Camera Tier: $cameraPresetLabel")
             appendLine()
             appendLine("Camera Summary:")
             basicInfo.cameraSummaryLines.forEach { appendLine(it) }
@@ -305,7 +326,7 @@ class ResultActivity : AppCompatActivity() {
     private fun fallbackGpuScore(gpuRenderer: String): Int {
         if (gpuRenderer.contains("Adreno 750", true)) return 96
         if (gpuRenderer.contains("Adreno 740", true)) return 92
-        if (gpuRenderer.contains("Adreno 642", true)) return 74
+        if (gpuRenderer.contains("Adreno 642", true)) return 72
         if (gpuRenderer.contains("Mali-G710", true)) return 84
         if (gpuRenderer.contains("Mali-G57", true)) return 50
         if (gpuRenderer.contains("PowerVR GE8320", true)) return 18
@@ -321,33 +342,6 @@ class ResultActivity : AppCompatActivity() {
         else -> 35
     }
 
-    private fun getStorageScore(totalStorageGb: Double): Int = when {
-        totalStorageGb >= 512 -> 95
-        totalStorageGb >= 256 -> 85
-        totalStorageGb >= 128 -> 75
-        totalStorageGb >= 64 -> 60
-        else -> 40
-    }
-
-    private fun getDisplayScore(width: Int, height: Int, refreshRate: Float): Int {
-        val resolutionScore = when {
-            width >= 1440 || height >= 3200 -> 90
-            width >= 1080 || height >= 2400 -> 78
-            width >= 720 || height >= 1600 -> 62
-            else -> 45
-        }
-
-        val refreshScore = when {
-            refreshRate >= 144f -> 95
-            refreshRate >= 120f -> 88
-            refreshRate >= 90f -> 76
-            refreshRate >= 60f -> 60
-            else -> 40
-        }
-
-        return (resolutionScore + refreshScore) / 2
-    }
-
     private fun getBatteryScore(level: Int, health: String): Int {
         var score = when {
             level >= 90 -> 90
@@ -359,30 +353,6 @@ class ResultActivity : AppCompatActivity() {
         }
 
         if (health.equals("Good", true)) score += 5
-        return score.coerceAtMost(100)
-    }
-
-    private fun getCameraScore(
-        rearMp: Double,
-        hasOis: Boolean,
-        hasAutoFocus: Boolean,
-        hasVideoStabilization: Boolean,
-        supports4k: Boolean
-    ): Int {
-        var score = when {
-            rearMp >= 108 -> 80
-            rearMp >= 64 -> 72
-            rearMp >= 48 -> 65
-            rearMp >= 16 -> 55
-            rearMp > 0 -> 45
-            else -> 20
-        }
-
-        if (hasOis) score += 8
-        if (hasAutoFocus) score += 5
-        if (hasVideoStabilization) score += 5
-        if (supports4k) score += 5
-
         return score.coerceAtMost(100)
     }
 
@@ -408,36 +378,6 @@ class ResultActivity : AppCompatActivity() {
         if (hasRotationVector) score += 13
         if (hasHeartRate) score += 10
         return score.coerceAtMost(100)
-    }
-
-    private fun estimateStorageType(totalStorageGb: Double, socName: String): String {
-        return when {
-            socName.contains("Snapdragon 8", true) || socName.contains("Dimensity 9", true) -> "Estimated UFS 4.0 / 3.1 class"
-            socName.contains("Snapdragon 7", true) || socName.contains("Dimensity 8", true) -> "Estimated UFS 2.2 / 3.1 class"
-            totalStorageGb >= 256 -> "Estimated UFS 2.2 class"
-            totalStorageGb >= 128 -> "Estimated UFS 2.1 / UFS 2.2 class"
-            else -> "Estimated eMMC / entry UFS class"
-        }
-    }
-
-    private fun estimateDisplayClass(width: Int, height: Int, refreshRate: Float): String {
-        return when {
-            (width >= 1440 || height >= 3200) && refreshRate >= 120f -> "High-end QHD+ high refresh class"
-            (width >= 1080 || height >= 2400) && refreshRate >= 120f -> "Premium FHD+ high refresh class"
-            (width >= 1080 || height >= 2400) -> "Good FHD+ class"
-            (width >= 720 || height >= 1600) -> "HD+ class"
-            else -> "Basic display class"
-        }
-    }
-
-    private fun estimateCameraTier(rearMp: Double, hasOis: Boolean, supports4k: Boolean): String {
-        return when {
-            rearMp >= 108 && hasOis && supports4k -> "High camera tier"
-            rearMp >= 64 && supports4k -> "Upper mid camera tier"
-            rearMp >= 48 -> "Mid camera tier"
-            rearMp > 0 -> "Basic camera tier"
-            else -> "Unknown camera tier"
-        }
     }
 
     private fun yesNo(value: Boolean): String = if (value) "Yes" else "No"
