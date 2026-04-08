@@ -35,7 +35,6 @@ class AnalysisActivity : AppCompatActivity() {
                     binding.progressAnalysis.progress = progress
                     binding.txtProgressPercent.text = "$progress%"
                     binding.txtCurrentStatus.text = "Scanning system... ($progress%)"
-
                     binding.txtLiveLog.append("Step $progress completed...\n")
 
                     progress += 5
