@@ -17,7 +17,7 @@ object PdfReportExporter {
             val margin = 40
             val lineHeight = 20f
 
-            val paint = Paint().apply {
+            val textPaint = Paint().apply {
                 textSize = 12f
                 isAntiAlias = true
             }
@@ -44,7 +44,7 @@ object PdfReportExporter {
 
                 while (lineIndex < lines.size && y < pageHeight - margin) {
                     val line = lines[lineIndex]
-                    canvas.drawText(line, margin.toFloat(), y, paint)
+                    canvas.drawText(line, margin.toFloat(), y, textPaint)
                     y += lineHeight
                     lineIndex++
                 }
