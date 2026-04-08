@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.BuyMyPhone" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.BuyMyPhone" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/green_soft</item>
         <item name="colorOnPrimary">@color/black_terminal</item>
         <item name="colorSecondary">@color/green_terminal</item>
