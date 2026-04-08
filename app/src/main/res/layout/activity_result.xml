@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B0F14">
+    android:background="@color/screen_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Device Summary"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -38,49 +38,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textColor="#E2E8F0"
+                android:textColor="@color/text_primary"
                 android:textSize="15sp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/btnPreviewReport"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="56dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_neon"
+            android:background="@drawable/button_secondary"
             android:text="Preview Report"
             android:textAllCaps="false"
-            android:textColor="#000000" />
+            android:textColor="@color/button_secondary_text" />
 
         <Button
-            android:id="@+id/btnDownloadTxt"
+            android:id="@+id/btnSavePdf"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="56dp"
             android:layout_marginTop="10dp"
-            android:backgroundTint="#1E2630"
-            android:text="Download TXT"
+            android:background="@drawable/button_secondary"
+            android:text="Save PDF"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
-
-        <Button
-            android:id="@+id/btnDownloadPdf"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1E2630"
-            android:text="Download PDF"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/button_secondary_text" />
 
         <Button
             android:id="@+id/btnBackHomeFromResult"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="56dp"
             android:layout_marginTop="10dp"
-            android:backgroundTint="#1E2630"
+            android:background="@drawable/button_secondary"
             android:text="Back"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/button_secondary_text" />
 
     </LinearLayout>
 </ScrollView>
