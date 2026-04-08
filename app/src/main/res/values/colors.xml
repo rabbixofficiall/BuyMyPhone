@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- DARK -->
+    <!-- Old theme compatibility colors -->
+    <color name="black_terminal">#000000</color>
+    <color name="green_terminal">#00E676</color>
+    <color name="green_soft">#00E676</color>
+    <color name="green_dark">#00C853</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_dark">#111827</color>
+    <color name="text_gray">#94A3B8</color>
+    <color name="card_white">#121821</color>
+    <color name="stroke_soft">#26303D</color>
+
+    <!-- Current premium palette -->
     <color name="bg_dark">#0B0F14</color>
     <color name="card_dark">#121821</color>
     <color name="glass_dark">#1AFFFFFF</color>
@@ -12,7 +23,6 @@
     <color name="accent_green">#00E676</color>
     <color name="accent_glow">#00FF88</color>
 
-    <!-- LIGHT -->
     <color name="bg_light">#F4F7FA</color>
     <color name="card_light">#FFFFFF</color>
     <color name="text_primary_light">#111827</color>
