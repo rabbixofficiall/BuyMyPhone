@@ -1,21 +1,23 @@
 package com.buymyphone.app.ui.deepanalysis
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.buymyphone.app.databinding.ActivityDeepAnalysisBinding
 import com.buymyphone.app.deep.DeepAnalysisEngine
 import com.buymyphone.app.detector.DeviceInfoDetector
+import com.buymyphone.app.export.PdfReportExporter
 import com.buymyphone.app.model.DeepAnalysisResult
-import com.buymyphone.app.ui.battery.BatteryDeepAnalysisActivity
-import com.buymyphone.app.ui.hardware.HardwareTestHubActivity
-import com.buymyphone.app.ui.sensor.SensorLiveActivity
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DeepAnalysisActivity : AppCompatActivity() {
 
@@ -32,14 +34,36 @@ class DeepAnalysisActivity : AppCompatActivity() {
         "Checking permissions...",
         "Running used phone software checks...",
         "Checking display replacement suspicion...",
-        "Preparing hardware test tools...",
-        "Preparing sensor live test starter...",
+        "Checking hardware capability and biometric state...",
+        "Checking sensor availability...",
         "Running battery deep starter analysis...",
         "Building buy/sell helper verdict..."
     )
 
     private var currentStepIndex = 0
     private lateinit var analysisResult: DeepAnalysisResult
+    private lateinit var deepReportText: String
+
+    private val createPdfDocumentLauncher =
+        registerForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { uri: Uri? ->
+            if (uri == null) {
+                Toast.makeText(this, "PDF save cancelled", Toast.LENGTH_SHORT).show()
+                return@registerForActivityResult
+            }
+
+            val success = PdfReportExporter.export(
+                context = this,
+                uri = uri,
+                title = "BuyMyPhone Deep Analysis Report",
+                reportText = deepReportText
+            )
+
+            Toast.makeText(
+                this,
+                if (success) "PDF report saved successfully" else "Failed to save PDF report",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
@@ -62,16 +86,14 @@ class DeepAnalysisActivity : AppCompatActivity() {
             checkPermissionsAndStart()
         }
 
-        binding.btnOpenHardwareTests.setOnClickListener {
-            startActivity(Intent(this, HardwareTestHubActivity::class.java))
-        }
-
-        binding.btnOpenSensorLive.setOnClickListener {
-            startActivity(Intent(this, SensorLiveActivity::class.java))
-        }
-
-        binding.btnOpenBatteryDeep.setOnClickListener {
-            startActivity(Intent(this, BatteryDeepAnalysisActivity::class.java))
+        binding.btnSaveDeepPdf.setOnClickListener {
+            if (::deepReportText.isInitialized) {
+                createPdfDocumentLauncher.launch(
+                    "deep_analysis_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.pdf"
+                )
+            } else {
+                Toast.makeText(this, "Run deep analysis first", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.btnBackDeepAnalysis.setOnClickListener {
@@ -103,7 +125,8 @@ class DeepAnalysisActivity : AppCompatActivity() {
         binding.txtDeepLog.text = ""
 
         val info = DeviceInfoDetector.getBasicDeviceInfo(this)
-        analysisResult = DeepAnalysisEngine.run(info)
+        analysisResult = DeepAnalysisEngine.run(this, info)
+        deepReportText = buildDeepReport(info, analysisResult)
 
         runNextStep()
     }
@@ -130,8 +153,8 @@ class DeepAnalysisActivity : AppCompatActivity() {
                 }
             }
             2 -> appendLog("[INFO] ${analysisResult.displaySuspicion}")
-            3 -> appendLog("[INFO] Hardware starter:\n${analysisResult.hardwareStarterVerdict}")
-            4 -> appendLog("[INFO] Sensor starter:\n${analysisResult.sensorStarterVerdict}")
+            3 -> appendLog("[INFO] Hardware checks:\n${analysisResult.hardwareStarterVerdict}")
+            4 -> appendLog("[INFO] Sensor checks:\n${analysisResult.sensorStarterVerdict}")
             5 -> appendLog("[INFO] ${analysisResult.batteryVerdict}")
             6 -> {
                 appendLog("[BUY] Reasons to buy:")
@@ -145,7 +168,7 @@ class DeepAnalysisActivity : AppCompatActivity() {
 
         handler.postDelayed({
             runNextStep()
-        }, 600)
+        }, 700)
     }
 
     private fun finishDeepAnalysis() {
@@ -177,6 +200,64 @@ class DeepAnalysisActivity : AppCompatActivity() {
 
         binding.txtDeepResult.text = resultText
         appendLog("[DONE] Deep analysis completed.")
+    }
+
+    private fun buildDeepReport(
+        info: com.buymyphone.app.model.BasicDeviceInfo,
+        result: DeepAnalysisResult
+    ): String {
+        return buildString {
+            appendLine("BUYMYPHONE DEEP ANALYSIS REPORT")
+            appendLine("================================")
+            appendLine("Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
+            appendLine("Android: ${info.androidVersion}")
+            appendLine("SDK: ${info.sdkInt}")
+            appendLine("Security Patch: ${info.securityPatch}")
+            appendLine()
+            appendLine("Final Verdict:")
+            appendLine(result.finalVerdict)
+            appendLine()
+            appendLine("Buy Reasons:")
+            if (result.buyReasons.isEmpty()) appendLine("- None")
+            result.buyReasons.forEach { appendLine("- $it") }
+            appendLine()
+            appendLine("Avoid Reasons:")
+            if (result.avoidReasons.isEmpty()) appendLine("- None")
+            result.avoidReasons.forEach { appendLine("- $it") }
+            appendLine()
+            appendLine("Warnings:")
+            if (result.usedPhoneWarnings.isEmpty()) appendLine("- None")
+            result.usedPhoneWarnings.forEach { appendLine("- $it") }
+            appendLine()
+            appendLine("Display Suspicion:")
+            appendLine(result.displaySuspicion)
+            appendLine()
+            appendLine("Battery Verdict:")
+            appendLine(result.batteryVerdict)
+            appendLine()
+            appendLine("Hardware Check Summary:")
+            appendLine(result.hardwareStarterVerdict)
+            appendLine()
+            appendLine("Sensor Summary:")
+            appendLine(result.sensorStarterVerdict)
+            appendLine()
+            appendLine("Core Device Info:")
+            appendLine("RAM: ${"%.2f".format(Locale.US, info.totalRamGb)} GB")
+            appendLine("Storage: ${"%.2f".format(Locale.US, info.totalStorageGb)} GB")
+            appendLine("Display: ${info.displayWidth} x ${info.displayHeight}")
+            appendLine("Refresh Rate: ${"%.2f".format(Locale.US, info.refreshRate.toDouble())} Hz")
+            appendLine("Battery Level: ${info.batteryLevelPercent}%")
+            appendLine("Battery Health: ${info.batteryHealthText}")
+            appendLine("Battery Temperature: ${info.batteryTemperatureCelsius} °C")
+            appendLine("SoC: ${info.socModel}")
+            appendLine("GPU: ${info.gpuRenderer}")
+            appendLine("Rear Cameras: ${info.rearCameraCount}")
+            appendLine("Front Cameras: ${info.frontCameraCount}")
+            appendLine("Best Rear Camera: ${"%.2f".format(Locale.US, info.bestRearCameraMp)} MP")
+            appendLine("OIS: ${if (info.hasOis) "Yes" else "No"}")
+            appendLine("4K Support: ${if (info.supports4k) "Yes" else "No"}")
+            appendLine("Total Sensors: ${info.totalSensors}")
+        }
     }
 
     private fun appendLog(message: String) {
