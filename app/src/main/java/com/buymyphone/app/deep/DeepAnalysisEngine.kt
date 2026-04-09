@@ -1,19 +1,25 @@
 package com.buymyphone.app.deep
 
+import android.content.Context
+import android.content.pm.PackageManager
+import android.hardware.camera2.CameraManager
+import android.os.Build
+import android.os.Vibrator
+import androidx.biometric.BiometricManager
 import com.buymyphone.app.model.BasicDeviceInfo
 import com.buymyphone.app.model.DeepAnalysisResult
 import com.buymyphone.app.utils.RootCheckUtils
 
 object DeepAnalysisEngine {
 
-    fun run(info: BasicDeviceInfo): DeepAnalysisResult {
+    fun run(context: Context, info: BasicDeviceInfo): DeepAnalysisResult {
         val warnings = mutableListOf<String>()
         val buyReasons = mutableListOf<String>()
         val avoidReasons = mutableListOf<String>()
 
         val displaySuspicion = detectDisplaySuspicion(info)
         val batteryVerdict = buildBatteryVerdict(info)
-        val hardwareStarterVerdict = buildHardwareStarterVerdict(info)
+        val hardwareStarterVerdict = buildHardwareAutoVerdict(context, info)
         val sensorStarterVerdict = buildSensorStarterVerdict(info)
 
         if (displaySuspicion != "No strong display replacement suspicion detected.") {
@@ -28,6 +34,11 @@ object DeepAnalysisEngine {
             avoidReasons.add("Battery health needs attention.")
         } else {
             buyReasons.add("Battery health looks acceptable.")
+        }
+
+        if (info.batteryTemperatureCelsius >= 43) {
+            warnings.add("Battery temperature is high.")
+            avoidReasons.add("Battery is running hot during inspection.")
         }
 
         if (info.batteryLevelPercent in 0..20) {
@@ -45,11 +56,15 @@ object DeepAnalysisEngine {
         if (!info.hasProximity) {
             warnings.add("Proximity sensor missing.")
             avoidReasons.add("Call behavior and auto screen-off may be affected.")
+        } else {
+            buyReasons.add("Proximity sensor is available.")
         }
 
         if (!info.hasLightSensor) {
             warnings.add("Light sensor missing.")
             avoidReasons.add("Auto brightness experience may be limited.")
+        } else {
+            buyReasons.add("Light sensor is available.")
         }
 
         if (info.totalRamGb >= 8) {
@@ -76,6 +91,12 @@ object DeepAnalysisEngine {
 
         if (info.supports4k) {
             buyReasons.add("4K video support is available.")
+        }
+
+        if (!info.hasFlash) {
+            avoidReasons.add("Flashlight is not available.")
+        } else {
+            buyReasons.add("Flashlight is available.")
         }
 
         if (RootCheckUtils.isRootSuspicious()) {
@@ -142,19 +163,53 @@ object DeepAnalysisEngine {
         }
     }
 
-    private fun buildHardwareStarterVerdict(info: BasicDeviceInfo): String {
-        val items = mutableListOf<String>()
+    private fun buildHardwareAutoVerdict(context: Context, info: BasicDeviceInfo): String {
+        val pm = context.packageManager
 
-        items.add("Touchscreen manual test pending")
-        items.add("Dead pixel manual test pending")
-        items.add("Speaker manual test pending")
-        items.add("Mic manual test pending")
-        items.add("Vibration test pending")
-        items.add("Proximity test ${if (info.hasProximity) "supported" else "not supported"}")
-        items.add("Flashlight test ${if (info.hasFlash) "supported" else "not supported"}")
-        items.add("Fingerprint availability software check pending")
+        val touchscreenSupport = pm.hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN)
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        val hasVibrator = vibrator?.hasVibrator() == true
 
-        return items.joinToString(separator = "\n")
+        val fingerprintStatus = try {
+            val biometricManager = BiometricManager.from(context)
+            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
+                BiometricManager.BIOMETRIC_SUCCESS -> "Fingerprint / biometric available"
+                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> "Biometric hardware detected, but nothing enrolled"
+                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> "No biometric hardware detected"
+                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> "Biometric hardware unavailable"
+                else -> "Biometric state unknown"
+            }
+        } catch (e: Exception) {
+            "Biometric check unavailable"
+        }
+
+        val speakerState = if (pm.hasSystemFeature(PackageManager.FEATURE_AUDIO_OUTPUT)) {
+            "Speaker output feature available"
+        } else {
+            "Speaker output feature not reported"
+        }
+
+        val micState = if (pm.hasSystemFeature(PackageManager.FEATURE_MICROPHONE)) {
+            "Microphone feature available"
+        } else {
+            "Microphone feature not reported"
+        }
+
+        val flashState = if (info.hasFlash) "Flashlight available" else "Flashlight not available"
+        val proximityState = if (info.hasProximity) "Proximity sensor available" else "Proximity sensor not available"
+        val deadPixelState = "Dead pixel test requires visual confirmation"
+        val touchState = if (touchscreenSupport) "Touchscreen feature available" else "Touchscreen feature not reported"
+
+        return buildString {
+            appendLine(touchState)
+            appendLine(deadPixelState)
+            appendLine(speakerState)
+            appendLine(micState)
+            appendLine(if (hasVibrator) "Vibration motor available" else "Vibration motor not detected")
+            appendLine(proximityState)
+            appendLine(flashState)
+            appendLine(fingerprintStatus)
+        }.trim()
     }
 
     private fun buildSensorStarterVerdict(info: BasicDeviceInfo): String {
@@ -173,9 +228,9 @@ object DeepAnalysisEngine {
         avoidReasons: List<String>
     ): String {
         return when {
-            avoidReasons.size >= 4 -> "Used phone verdict: Buy with caution. Several weak points found."
-            avoidReasons.isNotEmpty() -> "Used phone verdict: Mixed result. Buy only after manual tests."
-            buyReasons.size >= 4 -> "Used phone verdict: Looks good from software-side checks."
+            avoidReasons.size >= 5 -> "Used phone verdict: Buy with caution. Many weak points found."
+            avoidReasons.size >= 3 -> "Used phone verdict: Mixed result. Buy only after manual checks."
+            buyReasons.size >= 5 -> "Used phone verdict: Looks good from software-side checks."
             else -> "Used phone verdict: Basic result. More manual testing recommended."
         }
     }
