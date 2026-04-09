@@ -1,8 +1,9 @@
 package com.buymyphone.app.ui.hardware
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricManager
 import com.buymyphone.app.databinding.ActivityFingerprintCheckBinding
 
 class FingerprintCheckActivity : AppCompatActivity() {
@@ -23,32 +24,32 @@ class FingerprintCheckActivity : AppCompatActivity() {
 
     private fun getFingerprintStatus(): String {
         return try {
-            val biometricManager = BiometricManager.from(this)
+            val pm = packageManager
 
-            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
-                BiometricManager.BIOMETRIC_SUCCESS ->
-                    "Biometric / fingerprint hardware is available and ready."
+            val hasFingerprint = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                pm.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
+            } else {
+                false
+            }
 
-                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
-                    "Biometric / fingerprint hardware detected, but no fingerprint is enrolled."
+            val hasFaceBiometric = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                pm.hasSystemFeature(PackageManager.FEATURE_FACE)
+            } else {
+                false
+            }
 
-                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
-                    "No fingerprint / biometric hardware detected."
+            when {
+                hasFingerprint ->
+                    "Fingerprint hardware feature detected."
 
-                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
-                    "Fingerprint / biometric hardware is currently unavailable."
-
-                BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED ->
-                    "Security update required before biometric can be used."
-
-                BiometricManager.BIOMETRIC_STATUS_UNKNOWN ->
-                    "Biometric state is unknown on this device."
+                hasFaceBiometric ->
+                    "Biometric hardware detected, but fingerprint feature was not reported."
 
                 else ->
-                    "Unable to determine biometric / fingerprint state."
+                    "No fingerprint / biometric hardware feature detected."
             }
         } catch (e: Exception) {
-            "Biometric / fingerprint check failed safely without crash."
+            "Fingerprint / biometric check failed safely without crash."
         }
     }
 }
