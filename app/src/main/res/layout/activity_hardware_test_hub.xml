@@ -99,6 +99,16 @@
             android:textColor="@color/button_secondary_text" />
 
         <Button
+            android:id="@+id/btnCameraTest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Camera Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
             android:id="@+id/btnFingerprintCheck"
             android:layout_width="match_parent"
             android:layout_height="56dp"
