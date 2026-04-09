@@ -1,10 +1,8 @@
 package com.buymyphone.app.ui.hardware
 
-import android.content.Context
-import android.hardware.fingerprint.FingerprintManager
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import com.buymyphone.app.databinding.ActivityFingerprintCheckBinding
 
 class FingerprintCheckActivity : AppCompatActivity() {
@@ -24,18 +22,33 @@ class FingerprintCheckActivity : AppCompatActivity() {
     }
 
     private fun getFingerprintStatus(): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val fingerprintManager =
-                getSystemService(Context.FINGERPRINT_SERVICE) as? FingerprintManager
+        return try {
+            val biometricManager = BiometricManager.from(this)
 
-            when {
-                fingerprintManager == null -> "Fingerprint service not available."
-                !fingerprintManager.isHardwareDetected -> "Fingerprint hardware not detected."
-                !fingerprintManager.hasEnrolledFingerprints() -> "Fingerprint hardware detected, but no fingerprint is enrolled."
-                else -> "Fingerprint hardware is available and at least one fingerprint is enrolled."
+            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
+                BiometricManager.BIOMETRIC_SUCCESS ->
+                    "Biometric / fingerprint hardware is available and ready."
+
+                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
+                    "Biometric / fingerprint hardware detected, but no fingerprint is enrolled."
+
+                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
+                    "No fingerprint / biometric hardware detected."
+
+                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
+                    "Fingerprint / biometric hardware is currently unavailable."
+
+                BiometricManager.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED ->
+                    "Security update required before biometric can be used."
+
+                BiometricManager.BIOMETRIC_STATUS_UNKNOWN ->
+                    "Biometric state is unknown on this device."
+
+                else ->
+                    "Unable to determine biometric / fingerprint state."
             }
-        } else {
-            "Fingerprint check requires Android 6 or newer."
+        } catch (e: Exception) {
+            "Biometric / fingerprint check failed safely without crash."
         }
     }
 }
