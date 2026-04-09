@@ -8,6 +8,7 @@ import com.buymyphone.app.R
 import com.buymyphone.app.databinding.ActivityHomeBinding
 import com.buymyphone.app.ui.about.AboutActivity
 import com.buymyphone.app.ui.analysis.AnalysisActivity
+import com.buymyphone.app.ui.deepanalysis.DeepAnalysisActivity
 import com.buymyphone.app.ui.premium.PremiumActivity
 import com.buymyphone.app.ui.settings.SettingsActivity
 
@@ -41,6 +42,11 @@ class HomeActivity : AppCompatActivity() {
         binding.btnStartAnalysis.setOnClickListener { view ->
             view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
             startActivity(Intent(this, AnalysisActivity::class.java))
+        }
+
+        binding.btnDeepAnalysis.setOnClickListener { view ->
+            view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+            startActivity(Intent(this, DeepAnalysisActivity::class.java))
         }
     }
 }
