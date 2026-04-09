@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/txtHeavyAppsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Heavy Apps Detector"
+        android:textColor="@color/text_primary"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtHeavyAppsSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Installed apps sorted by APK size."
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp" />
+
+    <ListView
+        android:id="@+id/listHeavyApps"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="18dp"
+        android:layout_weight="1"
+        android:background="@drawable/glass_bg"
+        android:divider="@color/divider"
+        android:dividerHeight="1dp" />
+
+    <Button
+        android:id="@+id/btnRefreshHeavyApps"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/button_secondary"
+        android:text="Refresh"
+        android:textAllCaps="false"
+        android:textColor="@color/button_secondary_text" />
+
+    <Button
+        android:id="@+id/btnBackHeavyApps"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_secondary"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textColor="@color/button_secondary_text" />
+
+</LinearLayout>
