@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Used phone check, display suspicion, hardware tests, sensor live test and battery deep analysis."
+            android:text="Automatic software-side deep scan with hardware capability checks, used phone warnings and buy/sell helper."
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
 
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Ready to start deep analysis."
+                android:text="Tap Run Deep Analysis."
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
@@ -125,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Run deep analysis to get verdict."
+                android:text="Final verdict will appear here."
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -135,41 +135,19 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="18dp"
-            android:background="@drawable/button_secondary"
+            android:background="@drawable/button_danger"
             android:text="Run Deep Analysis"
             android:textAllCaps="false"
-            android:textColor="@color/button_secondary_text"
+            android:textColor="@color/text_white"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnOpenHardwareTests"
+            android:id="@+id/btnSaveDeepPdf"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/button_secondary"
-            android:text="Hardware Tests"
-            android:textAllCaps="false"
-            android:textColor="@color/button_secondary_text"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnOpenSensorLive"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_secondary"
-            android:text="Sensor Live Test"
-            android:textAllCaps="false"
-            android:textColor="@color/button_secondary_text"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnOpenBatteryDeep"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_secondary"
-            android:text="Battery Deep Analysis"
+            android:text="Save PDF"
             android:textAllCaps="false"
             android:textColor="@color/button_secondary_text"
             android:textStyle="bold" />
