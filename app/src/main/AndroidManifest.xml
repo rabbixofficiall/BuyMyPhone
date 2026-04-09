@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".BuyMyPhoneApp"
@@ -17,6 +20,62 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />
+
+        <activity
+            android:name=".ui.heavyapps.HeavyAppsDetectorActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.compare.ComparePhonesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.battery.BatteryDeepAnalysisActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.sensor.SensorLiveActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.FingerprintCheckActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.FlashlightTestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.ProximityTestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.VibrationTestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.MicTestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.SpeakerTestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.DeadPixelTestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.TouchscreenTestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.HardwareTestHubActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.deepanalysis.DeepAnalysisActivity"
+            android:exported="false" />
 
         <activity
             android:name=".ui.reports.ReportsActivity"
