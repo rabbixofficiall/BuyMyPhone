@@ -4,25 +4,19 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.ImageFormat
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
-import android.opengl.GLES20
 import android.os.BatteryManager
 import android.os.Build
 import android.os.Environment
 import android.os.StatFs
-import android.util.DisplayMetrics
 import android.util.Size
 import android.view.WindowManager
 import com.buymyphone.app.model.BasicDeviceInfo
-import java.io.BufferedReader
 import java.io.File
-import java.io.FileReader
 import java.util.Locale
-import javax.microedition.khronos.egl.EGL10
 
 object DeviceInfoDetector {
 
@@ -35,10 +29,8 @@ object DeviceInfoDetector {
         val availableRamGb = memoryInfo.availMem / (1024.0 * 1024.0 * 1024.0)
 
         val statFs = StatFs(Environment.getDataDirectory().absolutePath)
-        val totalStorageBytes = statFs.totalBytes.toDouble()
-        val availableStorageBytes = statFs.availableBytes.toDouble()
-        val totalStorageGb = totalStorageBytes / (1024.0 * 1024.0 * 1024.0)
-        val availableStorageGb = availableStorageBytes / (1024.0 * 1024.0 * 1024.0)
+        val totalStorageGb = statFs.totalBytes / (1024.0 * 1024.0 * 1024.0)
+        val availableStorageGb = statFs.availableBytes / (1024.0 * 1024.0 * 1024.0)
 
         val displayMetrics = context.resources.displayMetrics
         val displayWidth = displayMetrics.widthPixels
@@ -57,10 +49,10 @@ object DeviceInfoDetector {
             if (level >= 0 && scale > 0) ((level * 100f) / scale).toInt() else -1
         } ?: -1
 
-        val batteryTemperatureCelsius = batteryIntent?.let {
+        val batteryTemperatureCelsius: Float = batteryIntent?.let {
             val temp = it.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
-            if (temp >= 0) temp / 10 else -1
-        } ?: -1
+            if (temp >= 0) temp / 10f else -1f
+        } ?: -1f
 
         val isCharging = batteryIntent?.let {
             val status = it.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
@@ -85,7 +77,7 @@ object DeviceInfoDetector {
         val sensorNames = allSensors.map { it.name }
 
         val cameraInfo = readCameraInfo(context)
-        val glInfo = readGlInfo()
+        val gpuRenderer = readGpuRenderer()
 
         return BasicDeviceInfo(
             androidVersion = Build.VERSION.RELEASE ?: "Unknown",
@@ -112,9 +104,9 @@ object DeviceInfoDetector {
             coreCount = Runtime.getRuntime().availableProcessors(),
             maxCpuFreqMHz = readMaxCpuFreqMHz(),
             supportedAbis = Build.SUPPORTED_ABIS.joinToString(),
-            gpuRenderer = glInfo.renderer,
-            gpuVendor = glInfo.vendor,
-            gpuVersion = glInfo.version,
+            gpuRenderer = gpuRenderer,
+            gpuVendor = "Unknown",
+            gpuVersion = "Unknown",
             totalCameras = cameraInfo.totalCameras,
             rearCameraCount = cameraInfo.rearCameraCount,
             frontCameraCount = cameraInfo.frontCameraCount,
@@ -137,7 +129,9 @@ object DeviceInfoDetector {
             hasStepCounter = hasSensor(sensorManager, Sensor.TYPE_STEP_COUNTER),
             hasRotationVector = hasSensor(sensorManager, Sensor.TYPE_ROTATION_VECTOR),
             hasHeartRate = hasSensor(sensorManager, Sensor.TYPE_HEART_RATE),
-            sensorNames = sensorNames
+            sensorNames = sensorNames,
+            hardware = Build.HARDWARE ?: "Unknown",
+            board = Build.BOARD ?: "Unknown"
         )
     }
 
@@ -182,21 +176,11 @@ object DeviceInfoDetector {
         }
     }
 
-    private data class GlInfo(
-        val renderer: String,
-        val vendor: String,
-        val version: String
-    )
-
-    private fun readGlInfo(): GlInfo {
+    private fun readGpuRenderer(): String {
         return try {
-            GlInfo(
-                renderer = GLES20.glGetString(GLES20.GL_RENDERER) ?: "Unknown",
-                vendor = GLES20.glGetString(GLES20.GL_VENDOR) ?: "Unknown",
-                version = GLES20.glGetString(GLES20.GL_VERSION) ?: "Unknown"
-            )
+            Build.HARDWARE ?: "Unknown"
         } catch (e: Exception) {
-            GlInfo("Unknown", "Unknown", "Unknown")
+            "Unknown"
         }
     }
 
@@ -248,7 +232,7 @@ object DeviceInfoDetector {
                     0.0
                 }
 
-                val supports4kLocal = map?.getOutputSizes(ImageFormat.JPEG)?.any { size: Size ->
+                val supports4kLocal = map?.getOutputSizes(android.graphics.ImageFormat.JPEG)?.any { size: Size ->
                     size.width >= 3840 || size.height >= 2160
                 } == true
 
@@ -284,6 +268,7 @@ object DeviceInfoDetector {
                 }
                 if (oisModes.isNotEmpty() && oisModes.any { it != CameraCharacteristics.LENS_OPTICAL_STABILIZATION_MODE_OFF }) {
                     hasOis = true
+                    hasVideoStabilization = true
                 }
                 if (caps.contains(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_RAW)) {
                     supportsRaw = true
@@ -302,7 +287,7 @@ object DeviceInfoDetector {
                 hasFlash = hasFlash,
                 hasOis = hasOis,
                 hasAutoFocus = hasAutoFocus,
-                hasVideoStabilization = hasOis,
+                hasVideoStabilization = hasVideoStabilization,
                 supportsRaw = supportsRaw,
                 supports4k = supports4k,
                 summaryLines = summary
