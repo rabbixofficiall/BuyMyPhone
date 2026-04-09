@@ -12,6 +12,7 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/txtSettingsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Settings"
@@ -20,6 +21,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:id="@+id/cardAppearance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -28,6 +30,7 @@
             android:padding="18dp">
 
             <TextView
+                android:id="@+id/txtAppearanceTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Appearance"
@@ -57,6 +60,26 @@
             android:textColor="@color/button_secondary_text" />
 
         <Button
+            android:id="@+id/btnComparePhones"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Compare Two Phones"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnHeavyAppsDetector"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Heavy Apps Detector"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
             android:id="@+id/btnGoPremiumSettings"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -77,5 +100,4 @@
             android:textColor="@color/button_secondary_text" />
 
     </LinearLayout>
-
 </ScrollView>
