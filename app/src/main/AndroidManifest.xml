@@ -22,6 +22,10 @@
             android:value="@string/admob_app_id" />
 
         <activity
+            android:name=".ui.buysell.BuySellHelperActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.heavyapps.HeavyAppsDetectorActivity"
             android:exported="false" />
 
@@ -35,6 +39,10 @@
 
         <activity
             android:name=".ui.sensor.SensorLiveActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.hardware.CameraTestActivity"
             android:exported="false" />
 
         <activity
