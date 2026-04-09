@@ -42,6 +42,10 @@ class HardwareTestHubActivity : AppCompatActivity() {
             startActivity(Intent(this, FlashlightTestActivity::class.java))
         }
 
+        binding.btnCameraTest.setOnClickListener {
+            startActivity(Intent(this, CameraTestActivity::class.java))
+        }
+
         binding.btnFingerprintCheck.setOnClickListener {
             startActivity(Intent(this, FingerprintCheckActivity::class.java))
         }
