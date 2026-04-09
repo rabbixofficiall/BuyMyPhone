@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/txtHardwareTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hardware Tests"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtHardwareSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Run manual and guided hardware tests one by one."
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnTouchscreenTest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/button_secondary"
+            android:text="Touchscreen Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnDeadPixelTest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Dead Pixel Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnSpeakerTest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Speaker Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnMicTest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Mic Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnVibrationTest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Vibration Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnProximityTest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Proximity Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnFlashlightTest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Flashlight Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnFingerprintCheck"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Fingerprint Availability Check"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+        <Button
+            android:id="@+id/btnBackHardwareHub"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/button_secondary"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+    </LinearLayout>
+</ScrollView>
