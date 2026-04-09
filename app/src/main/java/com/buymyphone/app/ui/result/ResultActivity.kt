@@ -96,7 +96,10 @@ class ResultActivity : AppCompatActivity() {
         val ramScore = getRamScore(basicInfo.totalRamGb)
         val storageScore = storagePreset.score
         val displayScore = displayPreset.score
-        val batteryScore = matchedSoc?.batteryScore ?: getBatteryScore(basicInfo.batteryHealthText, basicInfo.batteryTemperatureCelsius)
+        val batteryScore = matchedSoc?.batteryScore ?: getBatteryScore(
+            basicInfo.batteryHealthText,
+            basicInfo.batteryTemperatureCelsius
+        )
         val cameraScore = cameraPreset.score
         val sensorScore = getSensorScore(
             basicInfo.hasAccelerometer,
@@ -222,8 +225,8 @@ class ResultActivity : AppCompatActivity() {
             appendLine("Model: ${Build.MODEL}")
             appendLine("Brand: ${Build.BRAND}")
             appendLine("Device: ${Build.DEVICE}")
-            appendLine("Board: ${Build.BOARD}")
-            appendLine("Hardware: ${Build.HARDWARE}")
+            appendLine("Board: ${basicInfo.board}")
+            appendLine("Hardware: ${basicInfo.hardware}")
             appendLine("Product: ${Build.PRODUCT}")
             appendLine("Android Version: ${basicInfo.androidVersion}")
             appendLine("SDK: ${basicInfo.sdkInt}")
@@ -247,7 +250,7 @@ class ResultActivity : AppCompatActivity() {
 
             appendLine("Battery Information:")
             appendLine("Battery Health: ${basicInfo.batteryHealthText}")
-            appendLine("Battery Temperature: ${if (basicInfo.batteryTemperatureCelsius >= 0) "${"%.2f".format(Locale.US, basicInfo.batteryTemperatureCelsius.toDouble())} °C" else "Unknown"}")
+            appendLine("Battery Temperature: ${if (basicInfo.batteryTemperatureCelsius >= 0f) "${"%.2f".format(Locale.US, basicInfo.batteryTemperatureCelsius.toDouble())} °C" else "Unknown"}")
             appendLine("Charging: ${yesNo(basicInfo.isCharging)}")
             appendLine()
 
@@ -334,7 +337,7 @@ class ResultActivity : AppCompatActivity() {
         else -> 35
     }
 
-    private fun getBatteryScore(health: String, temperature: Int): Int {
+    private fun getBatteryScore(health: String, temperature: Float): Int {
         var score = when {
             health.equals("Good", true) -> 80
             health.equals("Unknown", true) -> 60
@@ -342,9 +345,9 @@ class ResultActivity : AppCompatActivity() {
         }
 
         score += when {
-            temperature in 0..38 -> 15
-            temperature in 39..42 -> 5
-            temperature >= 43 -> -10
+            temperature in 0f..38f -> 15
+            temperature in 39f..42f -> 5
+            temperature >= 43f -> -10
             else -> 0
         }
 
