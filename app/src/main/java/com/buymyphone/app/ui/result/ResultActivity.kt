@@ -96,7 +96,7 @@ class ResultActivity : AppCompatActivity() {
         val ramScore = getRamScore(basicInfo.totalRamGb)
         val storageScore = storagePreset.score
         val displayScore = displayPreset.score
-        val batteryScore = matchedSoc?.batteryScore ?: getBatteryScore(basicInfo.batteryLevelPercent, basicInfo.batteryHealthText)
+        val batteryScore = matchedSoc?.batteryScore ?: getBatteryScore(basicInfo.batteryHealthText, basicInfo.batteryTemperatureCelsius)
         val cameraScore = cameraPreset.score
         val sensorScore = getSensorScore(
             basicInfo.hasAccelerometer,
@@ -246,10 +246,9 @@ class ResultActivity : AppCompatActivity() {
             appendLine()
 
             appendLine("Battery Information:")
-            appendLine("Battery Level: ${if (basicInfo.batteryLevelPercent >= 0) "${basicInfo.batteryLevelPercent}%" else "Unknown"}")
+            appendLine("Battery Health: ${basicInfo.batteryHealthText}")
             appendLine("Battery Temperature: ${if (basicInfo.batteryTemperatureCelsius >= 0) "${"%.2f".format(Locale.US, basicInfo.batteryTemperatureCelsius.toDouble())} °C" else "Unknown"}")
             appendLine("Charging: ${yesNo(basicInfo.isCharging)}")
-            appendLine("Battery Health: ${basicInfo.batteryHealthText}")
             appendLine()
 
             appendLine("SoC / CPU / GPU:")
@@ -335,18 +334,21 @@ class ResultActivity : AppCompatActivity() {
         else -> 35
     }
 
-    private fun getBatteryScore(level: Int, health: String): Int {
+    private fun getBatteryScore(health: String, temperature: Int): Int {
         var score = when {
-            level >= 90 -> 90
-            level >= 70 -> 80
-            level >= 50 -> 68
-            level >= 30 -> 55
-            level >= 0 -> 40
-            else -> 35
+            health.equals("Good", true) -> 80
+            health.equals("Unknown", true) -> 60
+            else -> 40
         }
 
-        if (health.equals("Good", true)) score += 5
-        return score.coerceAtMost(100)
+        score += when {
+            temperature in 0..38 -> 15
+            temperature in 39..42 -> 5
+            temperature >= 43 -> -10
+            else -> 0
+        }
+
+        return score.coerceIn(20, 100)
     }
 
     private fun getSensorScore(
@@ -376,4 +378,4 @@ class ResultActivity : AppCompatActivity() {
     private fun yesNo(value: Boolean): String {
         return if (value) "Yes" else "No"
     }
-                       }
+}
