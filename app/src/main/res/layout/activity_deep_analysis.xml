@@ -5,6 +5,7 @@
     android:background="@color/screen_bg">
 
     <LinearLayout
+        android:id="@+id/rootDeepAnalysis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -24,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Automatic software-side deep scan with hardware capability checks, used phone warnings and buy/sell helper."
+            android:text="Software-side automatic deep scan and manual hardware testing."
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
 
@@ -50,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Tap Run Deep Analysis."
+                android:text="Choose a mode below."
                 android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
@@ -103,51 +104,24 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/glass_bg"
-            android:orientation="vertical"
-            android:padding="18dp">
-
-            <TextView
-                android:id="@+id/txtDeepResultTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Buy / Sell Helper"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtDeepResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Final verdict will appear here."
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-        </LinearLayout>
-
         <Button
-            android:id="@+id/btnRunDeepAnalysis"
+            android:id="@+id/btnRunSoftwareTest"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="18dp"
             android:background="@drawable/button_danger"
-            android:text="Run Deep Analysis"
+            android:text="Software Test (Auto)"
             android:textAllCaps="false"
-            android:textColor="@color/text_white"
+            android:textColor="@android:color/white"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnSaveDeepPdf"
+            android:id="@+id/btnOpenHardwareTests"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/button_secondary"
-            android:text="Save PDF"
+            android:text="Hardware Test (Manual)"
             android:textAllCaps="false"
             android:textColor="@color/button_secondary_text"
             android:textStyle="bold" />
