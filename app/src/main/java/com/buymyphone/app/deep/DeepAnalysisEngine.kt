@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.hardware.camera2.CameraManager
 import android.os.Build
 import android.os.Vibrator
-import androidx.biometric.BiometricManager
 import com.buymyphone.app.model.BasicDeviceInfo
 import com.buymyphone.app.model.DeepAnalysisResult
 import com.buymyphone.app.utils.RootCheckUtils
@@ -170,18 +169,7 @@ object DeepAnalysisEngine {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         val hasVibrator = vibrator?.hasVibrator() == true
 
-        val fingerprintStatus = try {
-            val biometricManager = BiometricManager.from(context)
-            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
-                BiometricManager.BIOMETRIC_SUCCESS -> "Fingerprint / biometric available"
-                BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> "Biometric hardware detected, but nothing enrolled"
-                BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> "No biometric hardware detected"
-                BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> "Biometric hardware unavailable"
-                else -> "Biometric state unknown"
-            }
-        } catch (e: Exception) {
-            "Biometric check unavailable"
-        }
+        val fingerprintStatus = getFingerprintFeatureStatus(pm)
 
         val speakerState = if (pm.hasSystemFeature(PackageManager.FEATURE_AUDIO_OUTPUT)) {
             "Speaker output feature available"
@@ -210,6 +198,26 @@ object DeepAnalysisEngine {
             appendLine(flashState)
             appendLine(fingerprintStatus)
         }.trim()
+    }
+
+    private fun getFingerprintFeatureStatus(pm: PackageManager): String {
+        val hasFingerprint = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pm.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
+        } else {
+            false
+        }
+
+        val hasAnyBiometric = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            pm.hasSystemFeature(PackageManager.FEATURE_FACE)
+        } else {
+            false
+        }
+
+        return when {
+            hasFingerprint -> "Fingerprint hardware feature detected"
+            hasAnyBiometric -> "Biometric hardware feature detected"
+            else -> "No fingerprint / biometric hardware feature detected"
+        }
     }
 
     private fun buildSensorStarterVerdict(info: BasicDeviceInfo): String {
