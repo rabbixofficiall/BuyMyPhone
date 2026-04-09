@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/txtDeepTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deep Analysis"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtDeepSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Used phone check, display suspicion, hardware tests, sensor live test and battery deep analysis."
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/glass_bg"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/txtDeepStatusTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDeepStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Ready to start deep analysis."
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <ProgressBar
+                android:id="@+id/progressDeepAnalysis"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="16dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/progress_custom" />
+
+            <TextView
+                android:id="@+id/txtDeepProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="0%"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/glass_bg"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/txtDeepLogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deep Analysis Log"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDeepLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="monospace"
+                android:lineSpacingExtra="4dp"
+                android:text="Waiting to run..."
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/glass_bg"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/txtDeepResultTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buy / Sell Helper"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDeepResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Run deep analysis to get verdict."
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnRunDeepAnalysis"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/button_secondary"
+            android:text="Run Deep Analysis"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnOpenHardwareTests"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Hardware Tests"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnOpenSensorLive"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Sensor Live Test"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnOpenBatteryDeep"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Battery Deep Analysis"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBackDeepAnalysis"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_secondary"
+            android:text="Back"
+            android:textAllCaps="false"
+            android:textColor="@color/button_secondary_text" />
+
+    </LinearLayout>
+</ScrollView>
