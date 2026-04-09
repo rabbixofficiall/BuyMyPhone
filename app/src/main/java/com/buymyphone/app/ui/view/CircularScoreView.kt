@@ -31,7 +31,7 @@ class CircularScoreView @JvmOverloads constructor(
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.WHITE
+        color = Color.BLACK
         textAlign = Paint.Align.CENTER
         textSize = 80f
         isFakeBoldText = true
